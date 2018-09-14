@@ -1,21 +1,41 @@
 package com.dms.base.baseapplication;
 
-import android.graphics.drawable.Drawable;
-import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.GenericTransitionOptions;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.dms.base.baseproject.imageloader.LoaderFactory;
+import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dms.base.baseproject.mvp.IPresenter;
 
 import butterknife.BindView;
 
 public class AnotherActivity extends BaseUIActivity {
 
-    @BindView(R.id.net_iv)
-    ImageView netIv;
+    @BindView(R.id.circle_pb)
+    CircleProgress mCircleProgress;
+
+    float value = 0.f;
+
+    boolean onProgress = false;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(value >= mCircleProgress.getMaxValue()) {
+               stopProgress();
+                ToastUtils.showShort("百分百");
+                return;
+            }
+            value += 0.01;
+            mCircleProgress.setValue(value);
+            mHandler.sendEmptyMessageDelayed(0, 10);
+        }
+
+    };
 
     @Override
     public int getLayoutId() {
@@ -32,9 +52,24 @@ public class AnotherActivity extends BaseUIActivity {
         super.initView();
     }
 
-    public void loadImage(View view) {
-        Glide.with(this).load("http://pic24.nipic.com/20121029/3822951_123134776000_2.jpg")
-                .transition(GenericTransitionOptions.<Drawable>with(android.R.anim.slide_in_left))
-                .into(netIv);
+
+    public void changeProgress(View view) {
+//        if(!onProgress) {
+//            startProgress();
+//        } else {
+//            stopProgress();
+//        }
+    }
+
+    private void startProgress() {
+        onProgress = true;
+        value = 0;
+        mCircleProgress.setValue(value);
+        mHandler.sendEmptyMessageDelayed(0, 10);
+    }
+
+    private void stopProgress() {
+        onProgress = false;
+        mHandler.removeMessages(0);
     }
 }

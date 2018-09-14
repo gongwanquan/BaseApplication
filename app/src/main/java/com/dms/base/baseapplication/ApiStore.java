@@ -15,6 +15,14 @@ public interface ApiStore {
     @GET("appstore/history/query")
     Observable<HttpResultEntity<List<HistoryEntity>>> getHistory(@Query("day") String day);
 
+    @GET("appstore/idiom/query")
+    Observable<HttpResultEntity<IdiomEntity>> queryIdiom(@Query("name") String name);
+
+    @GET("appstore/dictionary/query")
+    Observable<HttpResultEntity<DictionaryEntity>> queryDictionary(@Query("name") String name);
+
+    @GET("appstore/horoscope/day")
+    Observable<HttpResultEntity<HoroscopeEntity>> horoscope(@Query("date")String date, @Query("hour") String hour);
 
 
 }

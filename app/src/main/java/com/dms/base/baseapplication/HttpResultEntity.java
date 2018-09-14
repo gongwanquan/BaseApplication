@@ -29,6 +29,11 @@ public class HttpResultEntity<T> implements IBaseModel<T> {
     }
 
     @Override
+    public boolean isAuthError() {
+        return false;
+    }
+
+    @Override
     public boolean isNull() {
         return null == result
                 || (result instanceof Collection && ((Collection) result).isEmpty())

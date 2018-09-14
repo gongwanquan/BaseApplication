@@ -1,4 +1,4 @@
-package com.dms.base.baseproject.imageloader;
+package com.dms.base.baseproject.img;
 
 import android.content.Context;
 import android.widget.ImageView;

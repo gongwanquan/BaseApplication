@@ -32,7 +32,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActManager.getAppManager().addActivity(this);
+
         mPresenter = createPresenter();
         if (null != mPresenter) {
             mPresenter.attachView(this);
@@ -51,7 +51,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         if (null != mPresenter) {
             mPresenter.detachView();
         }
-        ActManager.getAppManager().finishActivity(this);
     }
 
 }

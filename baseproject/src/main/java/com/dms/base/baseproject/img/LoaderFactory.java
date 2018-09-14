@@ -1,4 +1,4 @@
-package com.dms.base.baseproject.imageloader;
+package com.dms.base.baseproject.img;
 
 /**
  * Created by wanglei on 2016/11/28.
