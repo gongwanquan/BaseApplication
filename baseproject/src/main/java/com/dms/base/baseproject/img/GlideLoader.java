@@ -1,153 +1,139 @@
 package com.dms.base.baseproject.img;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
-
+import com.blankj.utilcode.util.SizeUtils;
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
-import java.io.File;
-
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
-/**
- * Created by wanglei on 2016/11/28.
- */
 
 public class GlideLoader implements ILoader {
 
-
     @Override
-    public void init(Context mContext) {
-
+    public void displayImg(Context context, Object sourceObj, ImageView targetView, LoaderOptions options) {
+        getRequestBuilder(context, sourceObj, options).into(targetView);
     }
 
-    private RequestManager getRequestManager(Context context) {
-        if (context instanceof Activity) {
-            return Glide.with((Activity) context);
+    @Override
+    public void loadWithCallback(Context context, Object sourceObj, final LoadCallback loadCallback, LoaderOptions options) {
+        getRequestBuilder(context, sourceObj, options).into(new Target<Drawable>() {
+            @Override
+            public void onLoadStarted(@Nullable Drawable placeholder) {
+
+            }
+
+            @Override
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                loadCallback.onLoadFailed();
+            }
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                loadCallback.onLoadReady(resource);
+            }
+
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+
+            @Override
+            public void getSize(@NonNull SizeReadyCallback cb) {
+
+            }
+
+            @Override
+            public void removeCallback(@NonNull SizeReadyCallback cb) {
+
+            }
+
+            @Override
+            public void setRequest(@Nullable Request request) {
+
+            }
+
+            @Nullable
+            @Override
+            public Request getRequest() {
+                return null;
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onDestroy() {
+
+            }
+        });
+    }
+
+
+    private RequestBuilder getRequestBuilder(Context context, Object sourceObj, LoaderOptions options) {
+        RequestBuilder requestBuilder = Glide.with(context).load(sourceObj);
+        if (null == options) {
+            return requestBuilder;
         }
-        return Glide.with(context);
+
+        return wrapRequestBuilder(requestBuilder, options);
     }
 
-    private void load(Object model, ImageView target, Options options) {
-        if (options == null) options = Options.defaultOptions();
-        RequestOptions requestOptions = wrapScaleType(options);
-
-        getRequestManager(target.getContext())
-                .load(model)
-                .apply(requestOptions)
-                .transition(withCrossFade())
-                .into(target);
-    }
-
-    @Override
-    public void loadNet(ImageView target, String url, Options options) {
-        load(url, target, options);
-    }
-
-    @Override
-    public void loadNet(Context context, String url, Options options, final LoadCallback callback) {
-        if (options == null) options = Options.defaultOptions();
-        RequestOptions requestOptions = wrapScaleType(options);
-
-        getRequestManager(context)
-                .load(url)
-                .apply(requestOptions)
-                .transition(withCrossFade())
-                .into(new SimpleTarget<Drawable>() {
-
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        super.onLoadFailed(errorDrawable);
-                    }
-
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        if (resource != null) {
-                            if (callback != null) {
-                                callback.onLoadReady(resource);
-                            }
-                        }
-                    }
-
-                });
-    }
-
-    @Override
-    public void loadResource(ImageView target, int resId, Options options) {
-        load(resId, target, options);
-    }
-
-    @Override
-    public void loadAssets(ImageView target, String assetName, Options options) {
-        load("file:///android_asset/" + assetName, target, options);
-    }
-
-    @Override
-    public void loadFile(ImageView target, File file, Options options) {
-        load(file, target, options);
-    }
-
-    @Override
-    public void clearMemoryCache(Context context) {
-        Glide.get(context).clearMemory();
-    }
-
-    @Override
-    public void clearDiskCache(Context context) {
-        Glide.get(context).clearDiskCache();
-    }
-
-    @Override
-    public void resume(Context context) {
-        getRequestManager(context).resumeRequests();
-    }
-
-    @Override
-    public void pause(Context context) {
-        getRequestManager(context).pauseRequests();
-    }
-
-    private RequestOptions wrapScaleType(Options options) {
-        RequestOptions request = new RequestOptions()
+    private RequestBuilder wrapRequestBuilder(RequestBuilder requestBuilder, LoaderOptions options) {
+        com.bumptech.glide.request.RequestOptions requestOptions = new com.bumptech.glide.request.RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .priority(Priority.HIGH);
 
-        if (options.scaleType != null) {
-            if (options.loadingResId != Options.RES_NONE) {
-                request.placeholder(options.loadingResId);
-            }
-            if (options.loadErrorResId != Options.RES_NONE) {
-                request.error(options.loadErrorResId);
-            }
-
-            switch (options.scaleType) {
-                case MATRIX:
-                case FIT_XY:
-                case FIT_START:
-                case FIT_END:
-                case CENTER:
-                case CENTER_INSIDE:
-                    break;
-
-                case FIT_CENTER:
-                    request.fitCenter();
-                    break;
-
-                case CENTER_CROP:
-                    request.centerCrop();
-                    break;
-            }
+        if (options.getLoadingResId() != -1) {
+            requestOptions.placeholder(options.getLoadingResId());
         }
 
-        return request;
+        if (options.getLoadErrorResId() != -1) {
+            requestOptions.error(options.getLoadErrorResId());
+        }
+
+        if (null != options.getImgReSize()) {
+            requestOptions.override(options.getImgReSize().getReWidth(), options.getImgReSize().getReHeight());
+        }
+
+        if (options.isCircle()) {
+            requestOptions.transform(new CircleCrop());
+        } else if (options.getRadius() > 0) {
+            requestOptions.transform(new RoundedCorners(SizeUtils.dp2px(options.getRadius())));
+        }
+
+        if (options.isCrossFade()) {
+            requestBuilder.transition(DrawableTransitionOptions.withCrossFade());
+
+        }
+
+        requestOptions.skipMemoryCache(options.isSkipMemoryCache());
+
+        if (null != options.getAnimator()) {
+            requestBuilder.transition(GenericTransitionOptions.with(options.getAnimator()));
+        }
+
+        return requestBuilder.apply(requestOptions);
     }
+
 }

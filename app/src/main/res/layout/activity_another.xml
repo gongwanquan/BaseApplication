@@ -6,12 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".AnotherActivity">
 
-    <com.dms.base.baseapplication.CircleProgress
-        android:id="@+id/circle_pb"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:onClick="changeProgress"
+    <ImageView
+        android:id="@+id/net_img_iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"/>
 
+    <Button
+        android:id="@+id/load_img_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="load_img"/>
 
 </FrameLayout>

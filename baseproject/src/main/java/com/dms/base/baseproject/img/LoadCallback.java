@@ -10,6 +10,4 @@ public abstract class LoadCallback {
     void onLoadFailed() {}
 
     public abstract void onLoadReady(Drawable drawable);
-
-    void onLoadCanceled() {}
 }
