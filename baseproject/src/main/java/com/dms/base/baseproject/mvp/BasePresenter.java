@@ -14,6 +14,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class BasePresenter<V extends IView> implements IPresenter<V> {
+
     private WeakReference<V> mView;
 
     @Override

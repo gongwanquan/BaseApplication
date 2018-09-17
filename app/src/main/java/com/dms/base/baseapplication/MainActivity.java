@@ -1,10 +1,14 @@
 package com.dms.base.baseapplication;
 
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.ToastUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,6 +41,8 @@ public class MainActivity extends BaseUIActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.history_btn:
+                List<Fragment> fragments = FragmentUtils.getFragments(getSupportFragmentManager());
+                ToastUtils.showShort("fragment num = " + fragments.size());
                 break;
             case R.id.dictionary_btn:
                 FragmentUtils.replace(getSupportFragmentManager(),

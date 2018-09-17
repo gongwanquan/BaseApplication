@@ -2,7 +2,7 @@ package com.dms.base.baseapplication;
 
 import com.dms.base.baseproject.mvp.IView;
 
-public interface MobView extends IView {
+public interface MobView extends IView<MobPresenter> {
 
     void showHistory(HistoryEntity historyEntity);
 

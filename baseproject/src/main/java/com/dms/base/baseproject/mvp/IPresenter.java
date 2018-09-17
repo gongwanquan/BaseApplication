@@ -2,11 +2,10 @@ package com.dms.base.baseproject.mvp;
 
 import com.dms.base.baseproject.net.IBaseModel;
 import com.dms.base.baseproject.net.ResponseListener;
-
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 
-public interface IPresenter<V> {
+public interface IPresenter<V extends IView> {
     void attachView(V view);
 
     void detachView();

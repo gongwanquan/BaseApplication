@@ -10,10 +10,11 @@ import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.mvp.IView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment<P extends IPresenter> extends com.trello.rxlifecycle2.components.support.RxFragment implements IView {
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView<P> {
     private View mRootView;
 
     protected P mPresenter;

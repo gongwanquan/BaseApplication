@@ -2,7 +2,7 @@ package com.dms.base.baseproject.mvp;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
-public interface IView<P extends IPresenter> {
+public interface IView<P> {
     void showLoading();
 
     void hideLoading();

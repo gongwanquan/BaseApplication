@@ -15,7 +15,7 @@ public class MobPresenter extends BasePresenter<MobView> {
                 .create(ApiStore.class);
     }
 
-    public void getHistory(String date) {
+    public void queryHistory(String date) {
 
         subscribe(mApiStore.getHistory(date), new ResponseListener<HttpResultEntity<List<HistoryEntity>>>() {
             @Override

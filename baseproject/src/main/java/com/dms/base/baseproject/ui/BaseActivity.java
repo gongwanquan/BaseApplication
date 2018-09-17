@@ -12,7 +12,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import butterknife.ButterKnife;
 
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IView {
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IView<P> {
     protected P mPresenter;
 
     @Override

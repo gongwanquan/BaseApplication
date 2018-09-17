@@ -1,7 +1,6 @@
 package com.dms.base.baseapplication;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -36,9 +35,7 @@ public class DictionaryFragment extends BaseUiFragment<MobPresenter> implements 
         Bundle bundle = getArguments();
         if(null != bundle) {
             String keywords = bundle.getString("extra_keywords");
-            if(!TextUtils.isEmpty(keywords)) {
-                mPresenter.queryDictionary(keywords);
-            }
+            mPresenter.queryDictionary(keywords);
         }
     }
 
