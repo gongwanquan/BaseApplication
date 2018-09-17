@@ -10,11 +10,10 @@ import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.mvp.IView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.components.RxFragment;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView<P> {
+public abstract class BaseFragment<P extends IPresenter> extends com.trello.rxlifecycle2.components.support.RxFragment implements IView {
     private View mRootView;
 
     protected P mPresenter;
@@ -48,7 +47,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (null == mRootView && getLayoutId() > 0) {
             mRootView = inflater.inflate(getLayoutId(), container, false);
-            ButterKnife.bind(mRootView);
+            ButterKnife.bind(this, mRootView);
         } else {
             ViewGroup viewGroup = (ViewGroup) mRootView.getParent();
             if (viewGroup != null) {

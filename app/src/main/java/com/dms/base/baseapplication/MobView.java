@@ -4,9 +4,11 @@ import com.dms.base.baseproject.mvp.IView;
 
 public interface MobView extends IView {
 
-    void showIdiom(IdiomEntity idiomEntity);
+    void showHistory(HistoryEntity historyEntity);
 
     void showDictionary(DictionaryEntity dictionaryEntity);
+
+    void showIdiom(IdiomEntity idiomEntity);
 
     void showHoroscope(HoroscopeEntity horoscopeEntity);
 }

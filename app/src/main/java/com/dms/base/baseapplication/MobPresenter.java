@@ -15,13 +15,13 @@ public class MobPresenter extends BasePresenter<MobView> {
                 .create(ApiStore.class);
     }
 
-    public void getHistory() {
+    public void getHistory(String date) {
 
-        subscribe(mApiStore.getHistory("0911"), new ResponseListener<HttpResultEntity<List<HistoryEntity>>>() {
+        subscribe(mApiStore.getHistory(date), new ResponseListener<HttpResultEntity<List<HistoryEntity>>>() {
             @Override
             public void onSuccess(HttpResultEntity<List<HistoryEntity>> listHttpResultEntity) {
                 if (!listHttpResultEntity.isNull()) {
-
+                    getView().showHistory(listHttpResultEntity.getData().get(0));
                 }
             }
 

@@ -64,6 +64,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         responseListener.onError(throwable);
+                        getView().hideLoading();
                     }
                 }, new Action() {
                     @Override
