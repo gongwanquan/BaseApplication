@@ -35,6 +35,6 @@ public class AnotherActivity extends BaseUIActivity {
 
     @OnClick(R.id.load_img_btn)
     public void onViewClicked() {
-        ImgLoaderManager.loadCircleImage(this, "http://file06.16sucai.com/2016/0513/42689f41a6d04aed7f28aeecbb029d41.jpg", netImgIv);
+        ImgLoaderManager.loadHeadLogo(this, "http://file06.16sucai.com/2016/0513/42689f41a6d04aed7f28aeecbb029d41.jpg", netImgIv);
     }
 }

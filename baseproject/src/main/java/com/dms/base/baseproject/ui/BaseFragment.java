@@ -28,6 +28,16 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public abstract P createPresenter();
 
+    protected void initView() {
+    }
+
+    protected void initData() {
+    }
+
+    protected void onLazyLoad() {
+
+    }
+
     @Override
     public LifecycleTransformer bindLifecycle() {
         return bindUntilEvent(FragmentEvent.DESTROY_VIEW);
@@ -45,6 +55,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
                 viewGroup.removeView(mRootView);
             }
         }
+        initView();
         return mRootView;
     }
 
@@ -58,6 +69,8 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         if (null != mPresenter) {
             mPresenter.attachView(this);
         }
+
+        initData();
     }
 
     @Override
@@ -76,9 +89,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return false;
     }
 
-    protected void onLazyLoad() {
 
-    }
 
     @Override
     public void onDestroyView() {

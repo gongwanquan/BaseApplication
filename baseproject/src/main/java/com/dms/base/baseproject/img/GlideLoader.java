@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
+
 import com.blankj.utilcode.util.SizeUtils;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
@@ -14,9 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 
@@ -29,64 +28,19 @@ public class GlideLoader implements ILoader {
 
     @Override
     public void loadWithCallback(Context context, Object sourceObj, final LoadCallback loadCallback, LoaderOptions options) {
-        getRequestBuilder(context, sourceObj, options).into(new Target<Drawable>() {
-            @Override
-            public void onLoadStarted(@Nullable Drawable placeholder) {
+        getRequestBuilder(context, sourceObj, options)
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        loadCallback.onLoadReady(resource);
+                    }
 
-            }
-
-            @Override
-            public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                loadCallback.onLoadFailed();
-            }
-
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                loadCallback.onLoadReady(resource);
-            }
-
-
-            @Override
-            public void onLoadCleared(@Nullable Drawable placeholder) {
-
-            }
-
-            @Override
-            public void getSize(@NonNull SizeReadyCallback cb) {
-
-            }
-
-            @Override
-            public void removeCallback(@NonNull SizeReadyCallback cb) {
-
-            }
-
-            @Override
-            public void setRequest(@Nullable Request request) {
-
-            }
-
-            @Nullable
-            @Override
-            public Request getRequest() {
-                return null;
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onStop() {
-
-            }
-
-            @Override
-            public void onDestroy() {
-
-            }
-        });
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        super.onLoadFailed(errorDrawable);
+                        loadCallback.onLoadFailed();
+                    }
+                });
     }
 
 
