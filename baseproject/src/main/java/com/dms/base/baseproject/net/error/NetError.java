@@ -5,9 +5,11 @@ package com.dms.base.baseproject.net.error;
  */
 
 public class NetError extends Exception {
-    private Throwable exception;
-
     private int errorType = OTHER_ERROR;
+
+    private int errorCode;
+
+    private Throwable exception;
 
     public static final int PARSE_ERROR = 0;   //数据解析异常
     public static final int CONNECT_ERROR = 1;   //连接异常
@@ -21,15 +23,24 @@ public class NetError extends Exception {
         this.errorType = errorType;
     }
 
-    public NetError(String detailMessage, int errorType) {
+    public NetError(String detailMessage, int errorType, int errorCode) {
         super(detailMessage);
         this.errorType = errorType;
+        this.errorCode = errorCode;
     }
 
     @Override
     public String getMessage() {
         if (exception != null) return exception.getMessage();
         return super.getMessage();
+    }
+
+    public int getErrorType() {
+        return errorType;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
     }
 
     public boolean isParseError() {

@@ -21,11 +21,11 @@ public class ApiTransformer<T extends IModel> implements ObservableTransformer<T
                     @Override
                     public Observable<T> apply(T t) throws Exception {
                         if (t == null || t.isNull()) {
-                            throw new NetError(t.getMsg(), NetError.NO_DATA_ERROR);
+                            throw new NetError(t.getMsg(), NetError.NO_DATA_ERROR, t.getCode());
                         } else if (t.isAuthError()) {
-                            throw new NetError(t.getMsg(), NetError.AUTH_ERROR);
+                            throw new NetError(t.getMsg(), NetError.AUTH_ERROR, t.getCode());
                         } else if (t.isBizError()) {
-                            throw new NetError(t.getMsg(), NetError.BUSINESS_ERROR);
+                            throw new NetError(t.getMsg(), NetError.BUSINESS_ERROR, t.getCode());
                         } else {
                             return Observable.just(t);
                         }

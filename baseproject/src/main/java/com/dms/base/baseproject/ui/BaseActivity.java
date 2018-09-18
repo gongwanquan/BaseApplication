@@ -2,6 +2,7 @@ package com.dms.base.baseproject.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.mvp.IView;
 import com.dms.base.baseproject.net.error.NetError;
@@ -24,11 +25,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         return bindUntilEvent(ActivityEvent.DESTROY);
     }
 
-    @Override
-    public void showError(NetError netError) {
-
-    }
-
     protected void initView() {
     }
 
@@ -43,7 +39,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         if (null != mPresenter) {
             mPresenter.attachView(this);
         }
-        if(getLayoutId() > 0) {
+        if (getLayoutId() > 0) {
             setContentView(getLayoutId());
             ButterKnife.bind(this);
         }

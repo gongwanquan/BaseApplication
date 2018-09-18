@@ -4,12 +4,9 @@ import com.dms.base.baseproject.net.error.NetError;
 import com.dms.base.baseproject.net.model.IModel;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-
 import org.json.JSONException;
-
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
 import io.reactivex.observers.ResourceObserver;
 
 public abstract class ApiObserver<T extends IModel> extends ResourceObserver<T> {
