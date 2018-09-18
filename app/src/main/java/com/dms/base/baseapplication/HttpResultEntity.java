@@ -1,6 +1,6 @@
 package com.dms.base.baseapplication;
 
-import com.dms.base.baseproject.net.IBaseModel;
+import com.dms.base.baseproject.net.model.IModel;
 
 import java.util.Collection;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
  * Description:
  */
 
-public class HttpResultEntity<T> implements IBaseModel<T> {
+public class HttpResultEntity<T> implements IModel<T> {
 
     /**
      * msg : success
@@ -24,20 +24,20 @@ public class HttpResultEntity<T> implements IBaseModel<T> {
     private T result;
 
     @Override
-    public boolean isError() {
-        return 200 != retCode;
-    }
-
-    @Override
-    public boolean isAuthError() {
-        return false;
-    }
-
-    @Override
     public boolean isNull() {
         return null == result
                 || (result instanceof Collection && ((Collection) result).isEmpty())
                 || (result instanceof Map && ((Map) result).isEmpty());
+    }
+
+    @Override
+    public boolean isAuthError() {
+        return 10001 == retCode;
+    }
+
+    @Override
+    public boolean isBizError() {
+        return 200 != retCode;
     }
 
     @Override

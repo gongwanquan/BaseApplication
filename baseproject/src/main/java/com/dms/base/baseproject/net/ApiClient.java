@@ -2,7 +2,7 @@ package com.dms.base.baseproject.net;
 
 
 import android.text.TextUtils;
-import com.dms.base.baseproject.net.interceptor.HandlerInterceptor;
+
 import com.dms.base.baseproject.net.interceptor.LogInterceptor;
 import com.dms.base.baseproject.net.progress.ProgressHelper;
 import java.util.HashMap;
@@ -112,11 +112,6 @@ public class ApiClient {
         CookieJar cookieJar = provider.configCookie();
         if (cookieJar != null) {
             builder.cookieJar(cookieJar);
-        }
-
-        RequestHandler handler = provider.configHandler();
-        if (handler != null) {
-            builder.addInterceptor(new HandlerInterceptor(handler));
         }
 
         if (provider.dispatchProgressEnable()) {

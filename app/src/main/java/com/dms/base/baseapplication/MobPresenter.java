@@ -1,8 +1,10 @@
 package com.dms.base.baseapplication;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.dms.base.baseproject.mvp.BasePresenter;
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.ResponseListener;
+import com.dms.base.baseproject.net.error.NetError;
 
 import java.util.List;
 
@@ -26,14 +28,10 @@ public class MobPresenter extends BasePresenter<MobView> {
             }
 
             @Override
-            public void onFailed(int code, String msg) {
-
+            public boolean handleError(NetError netError) {
+                return false;
             }
 
-            @Override
-            public void onError(Throwable throwable) {
-
-            }
         });
     }
 
@@ -41,20 +39,16 @@ public class MobPresenter extends BasePresenter<MobView> {
         subscribe(mApiStore.queryIdiom(name), new ResponseListener<HttpResultEntity<IdiomEntity>>() {
             @Override
             public void onSuccess(HttpResultEntity<IdiomEntity> idiomEntityHttpResultEntity) {
-                if(!idiomEntityHttpResultEntity.isNull()) {
+                if (!idiomEntityHttpResultEntity.isNull()) {
                     getView().showIdiom(idiomEntityHttpResultEntity.getData());
                 }
             }
 
             @Override
-            public void onFailed(int code, String msg) {
-
+            public boolean handleError(NetError netError) {
+                return false;
             }
 
-            @Override
-            public void onError(Throwable throwable) {
-
-            }
         });
     }
 
@@ -62,20 +56,19 @@ public class MobPresenter extends BasePresenter<MobView> {
         subscribe(mApiStore.queryDictionary(name), new ResponseListener<HttpResultEntity<DictionaryEntity>>() {
             @Override
             public void onSuccess(HttpResultEntity<DictionaryEntity> idiomEntityHttpResultEntity) {
-                if(!idiomEntityHttpResultEntity.isNull()) {
-                    getView().showDictionary(idiomEntityHttpResultEntity.getData());
+                getView().showDictionary(idiomEntityHttpResultEntity.getData());
+            }
+
+            @Override
+            public boolean handleError(NetError netError) {
+                if(netError.isAuthError()) {
+                    ToastUtils.showShort(netError.getMessage());
+                    return true;
                 }
+                return false;
             }
 
-            @Override
-            public void onFailed(int code, String msg) {
 
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-
-            }
         });
     }
 
@@ -83,20 +76,16 @@ public class MobPresenter extends BasePresenter<MobView> {
         subscribe(mApiStore.horoscope(date, hour), new ResponseListener<HttpResultEntity<HoroscopeEntity>>() {
             @Override
             public void onSuccess(HttpResultEntity<HoroscopeEntity> horoscopeEntityHttpResultEntity) {
-                if(!horoscopeEntityHttpResultEntity.isNull()) {
+                if (!horoscopeEntityHttpResultEntity.isNull()) {
                     getView().showHoroscope(horoscopeEntityHttpResultEntity.getData());
                 }
             }
 
             @Override
-            public void onFailed(int code, String msg) {
-
+            public boolean handleError(NetError netError) {
+                return false;
             }
 
-            @Override
-            public void onError(Throwable throwable) {
-
-            }
         });
     }
 

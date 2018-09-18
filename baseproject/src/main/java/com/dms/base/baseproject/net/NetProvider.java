@@ -17,8 +17,6 @@ public interface NetProvider {
 
     CookieJar configCookie();
 
-    RequestHandler configHandler();
-
     boolean dispatchProgressEnable();
 
     Interceptor[] configInterceptors();

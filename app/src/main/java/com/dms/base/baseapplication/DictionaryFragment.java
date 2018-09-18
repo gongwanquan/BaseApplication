@@ -10,7 +10,7 @@ public class DictionaryFragment extends BaseUiFragment<MobPresenter> implements 
     @BindView(R.id.dictionary_tv)
     TextView dictionaryTv;
 
-    public static DictionaryFragment newInstance(String keywords) {
+    public static DictionaryFragment createInstance(String keywords) {
         DictionaryFragment fragment = new DictionaryFragment();
         Bundle bundle = new Bundle();
         bundle.putString("extra_keywords", keywords);

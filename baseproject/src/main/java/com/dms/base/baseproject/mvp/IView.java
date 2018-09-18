@@ -1,5 +1,6 @@
 package com.dms.base.baseproject.mvp;
 
+import com.dms.base.baseproject.net.error.NetError;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
 public interface IView<P> {
@@ -12,4 +13,6 @@ public interface IView<P> {
     LifecycleTransformer bindLifecycle();
 
     P createPresenter();
+
+    void showError(NetError netError);
 }

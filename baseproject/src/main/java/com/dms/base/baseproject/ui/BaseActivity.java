@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.mvp.IView;
+import com.dms.base.baseproject.net.error.NetError;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -21,6 +22,11 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     @Override
     public LifecycleTransformer bindLifecycle() {
         return bindUntilEvent(ActivityEvent.DESTROY);
+    }
+
+    @Override
+    public void showError(NetError netError) {
+
     }
 
     protected void initView() {

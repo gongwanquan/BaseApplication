@@ -1,16 +1,12 @@
 package com.dms.base.baseproject.mvp;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.dms.base.baseproject.net.IBaseModel;
+import com.dms.base.baseproject.net.ApiObserver;
+import com.dms.base.baseproject.net.ApiTransformer;
+import com.dms.base.baseproject.net.error.NetError;
+import com.dms.base.baseproject.net.model.IModel;
 import com.dms.base.baseproject.net.ResponseListener;
-
 import java.lang.ref.WeakReference;
-
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class BasePresenter<V extends IView> implements IPresenter<V> {
@@ -39,37 +35,27 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
     }
 
     @Override
-    public void subscribe(Observable observable, Consumer consumer) {
-        observable.compose(getView().bindLifecycle())
-                .subscribe(consumer);
-    }
-
-    @Override
-    public <T extends IBaseModel> void subscribe(Observable<T> observable, final ResponseListener<T> responseListener) {
+    public <T extends IModel> void subscribe(Observable<T> observable, final ResponseListener<T> responseListener) {
         getView().showLoading();
 
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        observable.compose(new ApiTransformer<T>())
                 .compose(getView().bindLifecycle())
-                .subscribe(new Consumer<T>() {
+                .subscribe(new ApiObserver<T>() {
                     @Override
-                    public void accept(T result) throws Exception {
-                        if(result.isError()) {
-                            ToastUtils.showShort(result.getMsg());
-                            responseListener.onFailed(result.getCode(), result.getMsg());
-                        } else {
-                            responseListener.onSuccess(result);
+                    public void onSuccess(T t) {
+                        responseListener.onSuccess(t);
+                    }
+
+                    @Override
+                    public void onFailed(NetError netError) {
+                        getView().hideLoading();
+                        if (!responseListener.handleError(netError)) {
+                            getView().showError(netError);
                         }
                     }
-                }, new Consumer<Throwable>() {
+
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        responseListener.onError(throwable);
-                        getView().hideLoading();
-                    }
-                }, new Action() {
-                    @Override
-                    public void run() throws Exception {
+                    public void onComplete() {
                         getView().hideLoading();
                     }
                 });

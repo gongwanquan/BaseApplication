@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.mvp.IView;
+import com.dms.base.baseproject.net.error.NetError;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -41,6 +43,13 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public LifecycleTransformer bindLifecycle() {
         return bindUntilEvent(FragmentEvent.DESTROY_VIEW);
+    }
+
+    @Override
+    public void showError(NetError netError) {
+        if(netError.isConnectError()) {
+            ToastUtils.showShort("网络连接失败");
+        }
     }
 
     @Nullable

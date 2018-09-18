@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.NetProvider;
-import com.dms.base.baseproject.net.RequestHandler;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -36,11 +35,6 @@ public class APP extends Application {
             }
 
             @Override
-            public RequestHandler configHandler() {
-                return null;
-            }
-
-            @Override
             public boolean dispatchProgressEnable() {
                 return false;
             }
@@ -52,7 +46,7 @@ public class APP extends Application {
 
             @Override
             public boolean configLogEnable() {
-                return false;
+                return true;
             }
 
             @Override

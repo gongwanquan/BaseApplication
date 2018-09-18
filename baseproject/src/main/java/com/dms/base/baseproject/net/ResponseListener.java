@@ -1,9 +1,9 @@
 package com.dms.base.baseproject.net;
 
+import com.dms.base.baseproject.net.error.NetError;
+
 public interface ResponseListener<T> {
     void onSuccess(T t);
 
-    void onFailed(int code, String msg);
-
-    void onError(Throwable throwable);
+    boolean handleError(NetError netError);
 }
