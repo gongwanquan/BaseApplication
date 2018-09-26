@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.entity;
 
 public class DictionaryEntity {
 

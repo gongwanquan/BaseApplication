@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">BaseApplication</string>
+    <string name="app_name">BaseProject</string>
+    <string name="text_error">Error!</string>
+    <string name="text_empty">No data!</string>
+    <string name="text_retry">Something went wrong!\n\nTap to retry</string>
+    <string name="loading">loading...</string>
 </resources>

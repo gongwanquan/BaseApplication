@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.entity;
 
 import com.dms.base.baseproject.net.model.IModel;
 

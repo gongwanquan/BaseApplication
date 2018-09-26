@@ -1,10 +1,9 @@
 package com.dms.base.baseapplication;
 
 import android.app.Application;
-
+import com.dms.base.baseapplication.net.KeyInterceptor;
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.NetProvider;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
@@ -41,7 +40,7 @@ public class APP extends Application {
 
             @Override
             public Interceptor[] configInterceptors() {
-                return new Interceptor[] {new KeyInterceptor()};
+                return new Interceptor[]{new KeyInterceptor()};
             }
 
             @Override

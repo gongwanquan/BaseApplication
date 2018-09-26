@@ -1,8 +1,10 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.ui.widget;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+
+import com.dms.base.baseapplication.R;
 
 
 public class LoadingDialog extends Dialog {

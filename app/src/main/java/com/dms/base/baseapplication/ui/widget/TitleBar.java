@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.ui.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dms.base.baseapplication.R;
 
 import java.util.LinkedList;
 

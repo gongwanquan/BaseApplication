@@ -1,14 +1,15 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.image;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import com.dms.base.baseapplication.R;
 import com.dms.base.baseproject.img.LoadCallback;
 import com.dms.base.baseproject.img.LoaderFactory;
 import com.dms.base.baseproject.img.LoaderOptions;
 
-public class ImgLoaderManager {
+public class ImgLoadHelper {
 
     public static void loadCircleImage(Context context, String url, ImageView imageView) {
         LoaderOptions.Builder builder = new LoaderOptions.Builder();

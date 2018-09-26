@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.net;
 
 import java.io.IOException;
 

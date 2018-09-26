@@ -1,8 +1,12 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
 
+import com.dms.base.baseapplication.ui.widget.TitleBar;
+import com.dms.base.baseapplication.ui.widget.state_layout.StateLayout;
 import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.net.error.NetError;
 import com.dms.base.baseproject.ui.BaseActivity;
@@ -10,7 +14,10 @@ import com.dms.base.baseproject.ui.BaseActivity;
 public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<P> {
     protected TitleBar mTitleBar;
 
-    private LoadingDialog mLoadingDialog;
+    private StateLayout mStateView;
+
+    protected void onErrorAndEmptyAction() {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,18 +27,26 @@ public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<
     }
 
     @Override
+    public void setContentView(int layoutResID) {
+        mStateView = new StateLayout(this);
+        mStateView.setErrorAndEmptyAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onErrorAndEmptyAction();
+            }
+        });
+        setContentView(mStateView);
+        LayoutInflater.from(this).inflate(layoutResID, mStateView, true);
+    }
+
+    @Override
     public void showLoading() {
-        if (null == mLoadingDialog) {
-            mLoadingDialog = new LoadingDialog(this);
-        }
-        mLoadingDialog.show();
+        mStateView.showProgressView();
     }
 
     @Override
     public void hideLoading() {
-        if (null != mLoadingDialog && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-        }
+        mStateView.showContentView();
     }
 
     @Override
@@ -42,13 +57,13 @@ public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<
 
                 break;
             case NetError.CONNECT_ERROR:
-
+                mStateView.showErrorView();
                 break;
             case NetError.AUTH_ERROR:
 
                 break;
             case NetError.NO_DATA_ERROR:
-
+                mStateView.showEmptyView();
                 break;
             case NetError.BUSINESS_ERROR:
 

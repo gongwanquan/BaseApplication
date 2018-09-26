@@ -1,4 +1,10 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.net;
+
+import com.dms.base.baseapplication.entity.DictionaryEntity;
+import com.dms.base.baseapplication.entity.HistoryEntity;
+import com.dms.base.baseapplication.entity.HoroscopeEntity;
+import com.dms.base.baseapplication.entity.HttpResultEntity;
+import com.dms.base.baseapplication.entity.IdiomEntity;
 
 import java.util.List;
 import io.reactivex.Observable;

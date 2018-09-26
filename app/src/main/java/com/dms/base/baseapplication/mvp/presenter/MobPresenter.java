@@ -1,6 +1,13 @@
-package com.dms.base.baseapplication;
+package com.dms.base.baseapplication.mvp.presenter;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.dms.base.baseapplication.entity.DictionaryEntity;
+import com.dms.base.baseapplication.entity.HistoryEntity;
+import com.dms.base.baseapplication.entity.HoroscopeEntity;
+import com.dms.base.baseapplication.entity.HttpResultEntity;
+import com.dms.base.baseapplication.entity.IdiomEntity;
+import com.dms.base.baseapplication.mvp.view.MobView;
+import com.dms.base.baseapplication.net.ApiStore;
 import com.dms.base.baseproject.mvp.BasePresenter;
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.ResponseListener;

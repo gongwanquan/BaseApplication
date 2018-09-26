@@ -43,6 +43,26 @@ public class GlideLoader implements ILoader {
                 });
     }
 
+    @Override
+    public void clearMemoryCache(Context context) {
+        Glide.get(context).clearMemory();
+    }
+
+    @Override
+    public void clearDiskCache(Context context) {
+        Glide.get(context).clearDiskCache();
+    }
+
+    @Override
+    public void resume(Context context) {
+        Glide.with(context).resumeRequests();
+    }
+
+    @Override
+    public void pause(Context context) {
+        Glide.with(context).pauseRequests();
+    }
+
 
     private RequestBuilder getRequestBuilder(Context context, Object sourceObj, LoaderOptions options) {
         RequestBuilder requestBuilder = Glide.with(context).load(sourceObj);
