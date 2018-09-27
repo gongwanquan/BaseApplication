@@ -1,4 +1,4 @@
-package com.dms.base.baseproject.ui;
+package com.dms.base.baseproject.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

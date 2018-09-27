@@ -11,6 +11,8 @@ import com.dms.base.baseapplication.entity.HoroscopeEntity;
 import com.dms.base.baseapplication.entity.IdiomEntity;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
+import com.dms.base.baseproject.ui.activity.BaseUIActivity;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -20,6 +22,8 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
     EditText inputEt;
     @BindView(R.id.result_tv)
     TextView resultTv;
+
+    private String mInput;
 
 
     @Override
@@ -41,10 +45,16 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
 
     @OnClick(R.id.get_data_btn)
     public void onViewClicked() {
-        String inputStr = inputEt.getText().toString();
-        if(!TextUtils.isEmpty(inputStr)) {
-            mPresenter.queryIdiom(inputStr);
+        mInput = inputEt.getText().toString();
+        if(!TextUtils.isEmpty(mInput)) {
+            mPresenter.queryIdiom(mInput);
         }
+    }
+
+    @Override
+    protected void onErrorAndEmptyAction() {
+        super.onErrorAndEmptyAction();
+        mPresenter.queryIdiom(mInput);
     }
 
     @Override

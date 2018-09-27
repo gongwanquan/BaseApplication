@@ -14,6 +14,7 @@ import com.dms.base.baseproject.net.ResponseListener;
 import com.dms.base.baseproject.net.error.NetError;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MobPresenter extends BasePresenter<MobView> {
     private ApiStore mApiStore;
@@ -43,7 +44,7 @@ public class MobPresenter extends BasePresenter<MobView> {
     }
 
     public void queryIdiom(String name) {
-        subscribe(mApiStore.queryIdiom(name), new ResponseListener<HttpResultEntity<IdiomEntity>>() {
+        subscribe(mApiStore.queryIdiom(name).delay(3, TimeUnit.SECONDS), new ResponseListener<HttpResultEntity<IdiomEntity>>() {
             @Override
             public void onSuccess(HttpResultEntity<IdiomEntity> idiomEntityHttpResultEntity) {
                 if (!idiomEntityHttpResultEntity.isNull()) {
@@ -60,7 +61,7 @@ public class MobPresenter extends BasePresenter<MobView> {
     }
 
     public void queryDictionary(String name) {
-        subscribe(mApiStore.queryDictionary(name), new ResponseListener<HttpResultEntity<DictionaryEntity>>() {
+        subscribe(mApiStore.queryDictionary(name).delay(3, TimeUnit.SECONDS), new ResponseListener<HttpResultEntity<DictionaryEntity>>() {
             @Override
             public void onSuccess(HttpResultEntity<DictionaryEntity> idiomEntityHttpResultEntity) {
                 getView().showDictionary(idiomEntityHttpResultEntity.getData());

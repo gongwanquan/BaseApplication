@@ -10,6 +10,7 @@ import com.dms.base.baseapplication.entity.IdiomEntity;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.R;
+import com.dms.base.baseproject.ui.fragment.BaseUiFragment;
 
 import butterknife.BindView;
 
