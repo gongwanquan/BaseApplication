@@ -1,6 +1,7 @@
 package com.dms.base.baseapplication.ui.activity;
 
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,7 +13,6 @@ import com.dms.base.baseapplication.entity.IdiomEntity;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -25,21 +25,15 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
 
     private String mInput;
 
-
-    @Override
-    public MobPresenter createPresenter() {
-        return new MobPresenter();
-    }
-
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
     }
 
+
     @Override
-    protected void initView() {
-        super.initView();
+    public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
         mTitleBar.setTitle("测试");
     }
 

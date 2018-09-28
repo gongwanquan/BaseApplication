@@ -4,36 +4,43 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import com.dms.base.baseproject.mvp.IPresenter;
-import com.dms.base.baseproject.mvp.IView;
+import android.view.ViewGroup;;
+import com.blankj.utilcode.util.ToastUtils;
+import com.dms.base.baseproject.mvp.factory.PresenterFactory;
+import com.dms.base.baseproject.mvp.presenter.IPresenter;
+import com.dms.base.baseproject.mvp.view.IView;
+import com.dms.base.baseproject.ui.delegate.IFragmentDelegate;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView<P> {
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragmentDelegate<P>, IView {
     private View mRootView;
+
+    private Unbinder mUnBinder;
 
     protected P mPresenter;
 
-    protected boolean mIsViewInitiated;
-
-    protected boolean mIsVisibleToUser;
-
-    protected boolean mIsDataInitiated;
+    private boolean mIsViewInitiated, mIsVisibleToUser, mIsDataInitiated;
 
     @Override
-    public abstract P createPresenter();
-
-    protected void initView() {
+    public P createPresenter() {
+        return PresenterFactory.createPresenter(this);
     }
 
-    protected void initData() {
+    @Override
+    public void initView(Bundle savedInstanceState) {
     }
 
-    protected void onLazyLoad() {
+    @Override
+    public void initData(Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onLazyLoad() {
 
     }
 
@@ -42,34 +49,40 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return bindUntilEvent(FragmentEvent.DESTROY_VIEW);
     }
 
+    @Override
+    public void showMessage(CharSequence charSequence) {
+        ToastUtils.showShort(charSequence);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (null == mRootView && getLayoutId() > 0) {
             mRootView = inflater.inflate(getLayoutId(), container, false);
-            ButterKnife.bind(this, mRootView);
+            mUnBinder = ButterKnife.bind(this, mRootView);
         } else {
             ViewGroup viewGroup = (ViewGroup) mRootView.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(mRootView);
             }
         }
-        initView();
+        initView(savedInstanceState);
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mIsViewInitiated = true;
-        prepareLoadData(false);
 
         mPresenter = createPresenter();
         if (null != mPresenter) {
             mPresenter.attachView(this);
         }
 
-        initData();
+        initData(savedInstanceState);
+
+        mIsViewInitiated = true;
+        prepareLoadData(false);
     }
 
     @Override
@@ -81,6 +94,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     public boolean prepareLoadData(boolean forceLoad) {
         if (mIsViewInitiated && mIsVisibleToUser && (!mIsDataInitiated || forceLoad)) {
+            mIsDataInitiated = true;
             onLazyLoad();
             return true;
         }
@@ -95,6 +109,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         if (null != mPresenter) {
             mPresenter.detachView();
             mPresenter = null;
+        }
+
+        if (null != mUnBinder && mUnBinder != Unbinder.EMPTY) {
+            mUnBinder.unbind();
+            mUnBinder = null;
         }
     }
 }

@@ -5,11 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.ui.widget.state_layout.StateLayout;
-import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.net.error.NetError;
-import com.dms.base.baseproject.ui.fragment.BaseFragment;
 
 public abstract class BaseUiFragment<P extends IPresenter> extends BaseFragment<P> {
 

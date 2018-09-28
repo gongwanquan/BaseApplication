@@ -3,7 +3,7 @@ package com.dms.base.baseapplication.net;
 import com.dms.base.baseproject.net.ApiClient;
 
 public class ApiManager {
-    public static ApiStore mApiStore;
+    private static ApiStore mApiStore;
 
     public static ApiStore getApiStore() {
         if(null == mApiStore) {

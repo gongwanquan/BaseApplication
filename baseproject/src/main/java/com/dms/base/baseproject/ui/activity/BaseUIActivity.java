@@ -2,9 +2,12 @@ package com.dms.base.baseproject.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+
+import com.dms.base.baseproject.mvp.presenter.BasePresenter;
+import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.ui.widget.TitleBar;
 import com.dms.base.baseproject.ui.widget.state_layout.StateLayout;
-import com.dms.base.baseproject.mvp.IPresenter;
 import com.dms.base.baseproject.net.error.NetError;
 
 public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<P> {
@@ -26,6 +29,14 @@ public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<
     public void setContentView(int layoutResID) {
         mStateView = new StateLayout(this);
         mStateView.setContentResource(layoutResID);
+        View.OnClickListener emptyAndErrorClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onErrorAndEmptyAction();
+            }
+        };
+        mStateView.setEmptyAction(emptyAndErrorClickListener);
+        mStateView.setErrorAction(emptyAndErrorClickListener);
         setContentView(mStateView);
     }
 

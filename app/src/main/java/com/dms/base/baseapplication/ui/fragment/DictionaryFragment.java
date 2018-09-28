@@ -2,7 +2,6 @@ package com.dms.base.baseapplication.ui.fragment;
 
 import android.os.Bundle;
 import android.widget.TextView;
-
 import com.dms.base.baseapplication.entity.DictionaryEntity;
 import com.dms.base.baseapplication.entity.HistoryEntity;
 import com.dms.base.baseapplication.entity.HoroscopeEntity;
@@ -41,8 +40,8 @@ public class DictionaryFragment extends BaseUiFragment<MobPresenter> implements 
     }
 
     @Override
-    protected void initData() {
-        super.initData();
+    public void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
         Bundle bundle = getArguments();
         if (null != bundle) {
             mKeyWords = bundle.getString("extra_keywords");

@@ -1,5 +1,6 @@
-package com.dms.base.baseproject.mvp;
+package com.dms.base.baseproject.mvp.presenter;
 
+import com.dms.base.baseproject.mvp.view.IView;
 import com.dms.base.baseproject.net.ApiObserver;
 import com.dms.base.baseproject.net.ApiTransformer;
 import com.dms.base.baseproject.net.error.NetError;
@@ -34,7 +35,6 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
         return mView.get();
     }
 
-    @Override
     public <T extends IModel> void subscribe(Observable<T> observable, final ResponseListener<T> responseListener) {
         getView().showLoading();
 

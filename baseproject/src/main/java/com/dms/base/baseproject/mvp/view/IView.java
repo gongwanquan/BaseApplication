@@ -1,18 +1,17 @@
-package com.dms.base.baseproject.mvp;
+package com.dms.base.baseproject.mvp.view;
+
 
 import com.dms.base.baseproject.net.error.NetError;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
-public interface IView<P> {
+public interface IView {
     void showLoading();
 
     void hideLoading();
 
-    int getLayoutId();
-
     LifecycleTransformer bindLifecycle();
 
-    P createPresenter();
+    void showMessage(CharSequence charSequence);
 
     void showError(NetError netError);
 }

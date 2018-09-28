@@ -5,10 +5,13 @@ import android.text.TextUtils;
 
 import com.dms.base.baseproject.net.interceptor.LogInterceptor;
 import com.dms.base.baseproject.net.progress.ProgressHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -48,7 +51,7 @@ public class ApiClient {
 
 
     public Retrofit getRetrofit(String baseUrl, NetProvider provider) {
-        if (TextUtils.isEmpty(baseUrl)) {
+        if (HttpUrl.parse(baseUrl) == null) {
             throw new IllegalStateException("baseUrl can not be null");
         }
 
@@ -80,8 +83,8 @@ public class ApiClient {
         return retrofit;
     }
 
-    private OkHttpClient getClient(String baseUrl, NetProvider provider) {
-        if (TextUtils.isEmpty(baseUrl)) {
+    public OkHttpClient getClient(String baseUrl, NetProvider provider) {
+        if (HttpUrl.parse(baseUrl) == null) {
             throw new IllegalStateException("baseUrl can not be null");
         }
         if (null != mClientMap.get(baseUrl)) {

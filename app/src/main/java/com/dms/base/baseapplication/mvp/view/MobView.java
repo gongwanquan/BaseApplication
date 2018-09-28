@@ -5,9 +5,9 @@ import com.dms.base.baseapplication.entity.HistoryEntity;
 import com.dms.base.baseapplication.entity.HoroscopeEntity;
 import com.dms.base.baseapplication.entity.IdiomEntity;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
-import com.dms.base.baseproject.mvp.IView;
+import com.dms.base.baseproject.mvp.view.IView;
 
-public interface MobView extends IView<MobPresenter> {
+public interface MobView extends IView {
 
     void showHistory(HistoryEntity historyEntity);
 
