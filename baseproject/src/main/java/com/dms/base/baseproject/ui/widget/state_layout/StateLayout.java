@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -108,10 +109,10 @@ public class StateLayout extends FrameLayout implements IStateView {
         if (null != mEmptyIv && img > 0) {
             mEmptyIv.setImageResource(img);
         }
-        if (null != mEmptyTitleTv) {
+        if (null != mEmptyTitleTv && !TextUtils.isEmpty(title)) {
             mEmptyTitleTv.setText(title);
         }
-        if (null != mEmptyContentTv) {
+        if (null != mEmptyContentTv && !TextUtils.isEmpty(content)) {
             mEmptyContentTv.setText(content);
         }
     }
@@ -126,10 +127,10 @@ public class StateLayout extends FrameLayout implements IStateView {
         if (null != mErrorIv && img > 0) {
             mErrorIv.setImageResource(img);
         }
-        if (null != mErrorTitleTv) {
+        if (null != mErrorTitleTv && !TextUtils.isEmpty(title)) {
             mErrorTitleTv.setText(title);
         }
-        if (null != mErrorContentTv) {
+        if (null != mErrorContentTv && !TextUtils.isEmpty(content)) {
             mErrorContentTv.setText(content);
         }
     }

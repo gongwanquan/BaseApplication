@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
+import com.dms.base.baseproject.ui.activity.BaseActivity;
+import com.dms.base.baseproject.ui.fragment.BaseFragment;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -11,8 +13,18 @@ import java.lang.reflect.Type;
 public class PresenterFactory {
 
     @Nullable
-    public static <P extends IPresenter> P createPresenter(@NonNull Object o) {
-        Type genericSuperclass = o.getClass().getGenericSuperclass();
+    public static <P extends IPresenter> P createPresenter(@NonNull BaseActivity baseActivity) {
+        return createPresenter(baseActivity.getClass());
+    }
+
+    @Nullable
+    public static <P extends IPresenter> P createPresenter(@NonNull BaseFragment baseFragment) {
+        return createPresenter(baseFragment.getClass());
+    }
+
+    @Nullable
+    private static <P extends IPresenter> P createPresenter(@NonNull Class<?> c) {
+        Type genericSuperclass = c.getGenericSuperclass();
 
         if (genericSuperclass instanceof ParameterizedType) {
             Type[] actualTypeArguments = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
@@ -32,4 +44,6 @@ public class PresenterFactory {
 
         return null;
     }
+
+
 }

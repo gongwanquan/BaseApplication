@@ -87,6 +87,7 @@ public class LogInterceptor implements Interceptor {
         if (mediaType == null) return false;
 
         return ("text".equals(mediaType.subtype())
+                || "plain".equals(mediaType.subtype())
                 || "json".equals(mediaType.subtype())
                 || "xml".equals(mediaType.subtype())
                 || "html".equals(mediaType.subtype())

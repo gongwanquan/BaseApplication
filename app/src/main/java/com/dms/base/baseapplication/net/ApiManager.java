@@ -5,11 +5,24 @@ import com.dms.base.baseproject.net.ApiClient;
 public class ApiManager {
     private static ApiStore mApiStore;
 
+    private static UserService mUserService;
+
     public static ApiStore getApiStore() {
-        if(null == mApiStore) {
-            mApiStore = ApiClient.getInstance().getRetrofit("http://apicloud.mob.com/", null)
+        if (null == mApiStore) {
+            mApiStore = ApiClient.getInstance()
+                    .getRetrofit("http://apicloud.mob.com/", null)
                     .create(ApiStore.class);
         }
         return mApiStore;
+    }
+
+    public static UserService getUserService() {
+        if (null == mUserService) {
+            mUserService = ApiClient.getInstance()
+                    .getRetrofit("http://apicloud.mob.com/", null)
+                    .create(UserService.class);
+        }
+
+        return mUserService;
     }
 }

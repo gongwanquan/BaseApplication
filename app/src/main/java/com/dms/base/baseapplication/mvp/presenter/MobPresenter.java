@@ -3,7 +3,7 @@ package com.dms.base.baseapplication.mvp.presenter;
 import com.dms.base.baseapplication.entity.DictionaryEntity;
 import com.dms.base.baseapplication.entity.HistoryEntity;
 import com.dms.base.baseapplication.entity.HoroscopeEntity;
-import com.dms.base.baseapplication.entity.HttpResultEntity;
+import com.dms.base.baseapplication.entity.BaseResponse;
 import com.dms.base.baseapplication.entity.IdiomEntity;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.net.ApiManager;
@@ -22,10 +22,10 @@ public class MobPresenter extends BasePresenter<MobView> {
 
     public void queryHistory(String date) {
 
-        subscribe(mApiStore.getHistory(date), new ResponseListener<HttpResultEntity<List<HistoryEntity>>>() {
+        subscribe(mApiStore.getHistory(date), new ResponseListener<BaseResponse<List<HistoryEntity>>>() {
             @Override
-            public void onSuccess(HttpResultEntity<List<HistoryEntity>> listHttpResultEntity) {
-                getView().showHistory(listHttpResultEntity.getData().get(0));
+            public void onSuccess(BaseResponse<List<HistoryEntity>> listBaseResponse) {
+                getView().showHistory(listBaseResponse.getData().get(0));
             }
 
             @Override
@@ -37,10 +37,10 @@ public class MobPresenter extends BasePresenter<MobView> {
     }
 
     public void queryIdiom(String name) {
-        subscribe(mApiStore.queryIdiom(name), new ResponseListener<HttpResultEntity<IdiomEntity>>() {
+        subscribe(mApiStore.queryIdiom(name), new ResponseListener<BaseResponse<IdiomEntity>>() {
             @Override
-            public void onSuccess(HttpResultEntity<IdiomEntity> idiomEntityHttpResultEntity) {
-                getView().showIdiom(idiomEntityHttpResultEntity.getData());
+            public void onSuccess(BaseResponse<IdiomEntity> idiomEntityBaseResponse) {
+                getView().showIdiom(idiomEntityBaseResponse.getData());
             }
 
             @Override
@@ -52,10 +52,10 @@ public class MobPresenter extends BasePresenter<MobView> {
     }
 
     public void queryDictionary(String name) {
-        subscribe(mApiStore.queryDictionary(name), new ResponseListener<HttpResultEntity<DictionaryEntity>>() {
+        subscribe(mApiStore.queryDictionary(name), new ResponseListener<BaseResponse<DictionaryEntity>>() {
             @Override
-            public void onSuccess(HttpResultEntity<DictionaryEntity> idiomEntityHttpResultEntity) {
-                getView().showDictionary(idiomEntityHttpResultEntity.getData());
+            public void onSuccess(BaseResponse<DictionaryEntity> idiomEntityBaseResponse) {
+                getView().showDictionary(idiomEntityBaseResponse.getData());
             }
 
             @Override
@@ -72,10 +72,10 @@ public class MobPresenter extends BasePresenter<MobView> {
     }
 
     public void horoscope(String date, String hour) {
-        subscribe(mApiStore.horoscope(date, hour), new ResponseListener<HttpResultEntity<HoroscopeEntity>>() {
+        subscribe(mApiStore.horoscope(date, hour), new ResponseListener<BaseResponse<HoroscopeEntity>>() {
             @Override
-            public void onSuccess(HttpResultEntity<HoroscopeEntity> horoscopeEntityHttpResultEntity) {
-                getView().showHoroscope(horoscopeEntityHttpResultEntity.getData());
+            public void onSuccess(BaseResponse<HoroscopeEntity> horoscopeEntityBaseResponse) {
+                getView().showHoroscope(horoscopeEntityBaseResponse.getData());
             }
 
             @Override

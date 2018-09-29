@@ -10,7 +10,7 @@ import java.util.Map;
  * Description:
  */
 
-public class HttpResultEntity<T> implements IModel<T> {
+public class BaseResponse<T> implements IModel<T> {
 
     /**
      * msg : success
@@ -24,11 +24,10 @@ public class HttpResultEntity<T> implements IModel<T> {
     private T result;
 
     @Override
-    public boolean isNull() {
-        return null == result
-                || (result instanceof Collection && ((Collection) result).isEmpty())
-                || (result instanceof Map && ((Map) result).isEmpty());
+    public boolean isSuccess() {
+        return 200 == retCode;
     }
+
 
     @Override
     public boolean isAuthError() {
@@ -37,7 +36,14 @@ public class HttpResultEntity<T> implements IModel<T> {
 
     @Override
     public boolean isBizError() {
-        return 200 != retCode;
+        return 200 != retCode && 10001 != retCode;
+    }
+
+    @Override
+    public boolean isNull() {
+        return null == result
+                || (result instanceof Collection && ((Collection) result).isEmpty())
+                || (result instanceof Map && ((Map) result).isEmpty());
     }
 
     @Override
@@ -53,7 +59,6 @@ public class HttpResultEntity<T> implements IModel<T> {
     public T getData() {
         return result;
     }
-
 
 
 }

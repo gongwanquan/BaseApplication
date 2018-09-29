@@ -38,24 +38,23 @@ public abstract class BaseUiFragment<P extends IPresenter> extends BaseFragment<
     @Override
     public void showError(NetError netError) {
         switch (netError.getErrorType()) {
-
             case NetError.PARSE_ERROR:
-
+                mStateView.showError(0, "数据解析错误", "请检查数据格式");
                 break;
             case NetError.CONNECT_ERROR:
-                mStateView.showError();
+                mStateView.showError(0, "网络连接失败", "请检查网络连接");
                 break;
             case NetError.AUTH_ERROR:
-
+                mStateView.showError(0, null, netError.getMessage());
                 break;
             case NetError.NO_DATA_ERROR:
                 mStateView.showEmpty();
                 break;
             case NetError.BUSINESS_ERROR:
-
+                mStateView.showError(0, null, netError.getMessage());
                 break;
             case NetError.OTHER_ERROR:
-
+                showMessage(netError.getMessage());
                 break;
         }
     }

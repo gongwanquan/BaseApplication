@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication.image;
+package com.dms.base.baseapplication.img;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
