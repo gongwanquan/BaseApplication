@@ -2,11 +2,9 @@ package com.dms.base.baseproject.mvp.factory;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.ui.activity.BaseActivity;
 import com.dms.base.baseproject.ui.fragment.BaseFragment;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 

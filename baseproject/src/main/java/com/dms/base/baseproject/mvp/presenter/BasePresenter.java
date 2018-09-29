@@ -12,6 +12,9 @@ import io.reactivex.Observable;
 
 public class BasePresenter<V extends IView> implements IPresenter<V> {
 
+    public BasePresenter() {
+    }
+
     private WeakReference<V> mView;
 
     @Override

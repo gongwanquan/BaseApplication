@@ -53,7 +53,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             mUnBinder = ButterKnife.bind(this);
         }
 
-
         mPresenter = createPresenter();
         if (null != mPresenter) {
             mPresenter.attachView(this);
@@ -71,6 +70,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             mPresenter.detachView();
             mPresenter = null;
         }
+
         if (null != mUnBinder && mUnBinder != Unbinder.EMPTY) {
             mUnBinder.unbind();
             mUnBinder = null;

@@ -1,15 +1,11 @@
 package com.dms.base.baseproject.net;
 
 
-import android.text.TextUtils;
-
 import com.dms.base.baseproject.net.interceptor.LogInterceptor;
 import com.dms.base.baseproject.net.progress.ProgressHelper;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;

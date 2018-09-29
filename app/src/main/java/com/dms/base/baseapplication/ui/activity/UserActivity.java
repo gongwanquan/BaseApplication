@@ -3,17 +3,20 @@ package com.dms.base.baseapplication.ui.activity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.CacheDoubleUtils;
 import com.dms.base.baseapplication.R;
+import com.dms.base.baseapplication.entity.BaseResponse;
 import com.dms.base.baseapplication.entity.UserEntity;
-import com.dms.base.baseapplication.mvp.presenter.UserPresenter;
+import com.dms.base.baseapplication.net.ApiManager;
+import com.dms.base.baseproject.mvp.presenter.BasePresenter;
+import com.dms.base.baseproject.net.ResponseListener;
+import com.dms.base.baseproject.net.error.NetError;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserActivity extends BaseUIActivity<UserPresenter> {
+public class UserActivity extends BaseUIActivity<BasePresenter> {
 
     @BindView(R.id.username_et)
     EditText usernameEt;
@@ -29,7 +32,24 @@ public class UserActivity extends BaseUIActivity<UserPresenter> {
 
     @OnClick(R.id.register_btn)
     public void onViewClicked() {
-        mPresenter.login(usernameEt.getText().toString(), passwordEt.getText().toString());
+//        mPresenter.login(usernameEt.getText().toString(), passwordEt.getText().toString());
+        login();
+    }
+
+    private void login() {
+        mPresenter.subscribe(ApiManager.getUserService().login(usernameEt.getText().toString(), passwordEt.getText().toString()), new ResponseListener<BaseResponse<UserEntity>>() {
+            @Override
+            public void onSuccess(BaseResponse<UserEntity> userEntityBaseResponse) {
+                CacheDoubleUtils.getInstance().put("login_user", userEntityBaseResponse.getData());
+                ActivityUtils.startActivity(AnotherActivity.class);
+            }
+
+            @Override
+            public boolean handleError(NetError netError) {
+                showMessage(netError.getMessage());
+                return true;
+            }
+        });
     }
 
     @Override
@@ -41,7 +61,7 @@ public class UserActivity extends BaseUIActivity<UserPresenter> {
     @Override
     protected void onErrorAndEmptyAction() {
         super.onErrorAndEmptyAction();
-        mPresenter.login(usernameEt.getText().toString(), passwordEt.getText().toString());
+//        mPresenter.login(usernameEt.getText().toString(), passwordEt.getText().toString());
     }
 
 
