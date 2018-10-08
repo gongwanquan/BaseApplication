@@ -8,13 +8,13 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.bumptech.glide.GenericTransitionOptions;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -45,27 +45,27 @@ public class GlideLoader implements ILoader {
 
     @Override
     public void clearMemoryCache(Context context) {
-        Glide.get(context).clearMemory();
+        GlideApp.get(context).clearMemory();
     }
 
     @Override
     public void clearDiskCache(Context context) {
-        Glide.get(context).clearDiskCache();
+        GlideApp.get(context).clearDiskCache();
     }
 
     @Override
     public void resume(Context context) {
-        Glide.with(context).resumeRequests();
+        GlideApp.with(context).resumeRequests();
     }
 
     @Override
     public void pause(Context context) {
-        Glide.with(context).pauseRequests();
+        GlideApp.with(context).pauseRequests();
     }
 
 
     private RequestBuilder getRequestBuilder(Context context, Object sourceObj, LoaderOptions options) {
-        RequestBuilder requestBuilder = Glide.with(context).load(sourceObj);
+        RequestBuilder requestBuilder = GlideApp.with(context).load(sourceObj);
         if (null == options) {
             return requestBuilder;
         }
@@ -74,7 +74,7 @@ public class GlideLoader implements ILoader {
     }
 
     private RequestBuilder wrapRequestBuilder(RequestBuilder requestBuilder, LoaderOptions options) {
-        com.bumptech.glide.request.RequestOptions requestOptions = new com.bumptech.glide.request.RequestOptions()
+        RequestOptions requestOptions = new com.bumptech.glide.request.RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .priority(Priority.HIGH);
 

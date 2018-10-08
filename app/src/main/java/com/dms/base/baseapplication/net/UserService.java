@@ -17,4 +17,10 @@ public interface UserService {
 
     @GET("user/profile/put")
     Observable<BaseResponse> put(@Query("token") String token, @Query("uid") String uid, @Query("item") String item, @Query("value") String value);
+
+    @GET("user/profile/query")
+    Observable<BaseResponse<String>> query(@Query("uid") String uid, @Query("item") String item);
+
+    @GET("/user/password/change")
+    Observable<BaseResponse> changePassword(@Query("username") String username, @Query("oldPassword") String oldPassword, @Query("newPassword") String newPassword);
 }

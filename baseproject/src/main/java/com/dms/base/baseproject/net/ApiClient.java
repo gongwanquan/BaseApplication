@@ -23,7 +23,7 @@ public class ApiClient {
 
     private Map<String, Retrofit> mRetrofitMap = new HashMap<>();
 
-    private Map<String, OkHttpClient> mClientMap = new HashMap<>();
+    private Map<NetProvider, OkHttpClient> mHttpClientMap = new HashMap<>();
 
     private ApiClient() {
 
@@ -44,7 +44,6 @@ public class ApiClient {
     public static void registerProvider(String baseUrl, NetProvider provider) {
         getInstance().mProviderMap.put(baseUrl, provider);
     }
-
 
     public Retrofit getRetrofit(String baseUrl, NetProvider provider) {
         if (HttpUrl.parse(baseUrl) == null) {
@@ -68,7 +67,7 @@ public class ApiClient {
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(getClient(baseUrl, provider))
+                .client(getHttpClient(provider))
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
@@ -79,12 +78,14 @@ public class ApiClient {
         return retrofit;
     }
 
-    public OkHttpClient getClient(String baseUrl, NetProvider provider) {
-        if (HttpUrl.parse(baseUrl) == null) {
-            throw new IllegalStateException("baseUrl can not be null");
+    public OkHttpClient getHttpClient(NetProvider provider) {
+
+        if (null != mHttpClientMap.get(provider)) {
+            return mHttpClientMap.get(provider);
         }
-        if (null != mClientMap.get(baseUrl)) {
-            return mClientMap.get(baseUrl);
+
+        if (null == provider) {
+            provider = mDefaultProvider;
         }
 
         if (provider == null) {
@@ -131,10 +132,11 @@ public class ApiClient {
             builder.addInterceptor(logInterceptor);
         }
 
-        OkHttpClient client = builder.build();
-        mClientMap.put(baseUrl, client);
+        OkHttpClient httpClient = builder.build();
 
-        return client;
+        mHttpClientMap.put(provider, httpClient);
+
+        return httpClient;
     }
 
 }

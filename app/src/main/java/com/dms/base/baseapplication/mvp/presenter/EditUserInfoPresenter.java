@@ -2,6 +2,7 @@ package com.dms.base.baseapplication.mvp.presenter;
 
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.blankj.utilcode.util.CacheDoubleUtils;
 import com.dms.base.baseapplication.entity.BaseResponse;
@@ -14,6 +15,34 @@ import com.dms.base.baseproject.net.error.NetError;
 import com.google.gson.Gson;
 
 public class EditUserInfoPresenter extends BasePresenter<EditUserInfoFragment> {
+
+    public void queryUserInfo() {
+        final UserEntity userEntity = CacheDoubleUtils.getInstance().getParcelable("login_user", UserEntity.CREATOR);
+        if (null == userEntity) {
+            return;
+        }
+
+        subscribe(ApiManager.getUserService().query(userEntity.getUid(), "user_info"), new ResponseListener<BaseResponse<String>>() {
+            @Override
+            public void onSuccess(BaseResponse<String> userInfoBaseResponse) {
+                String userInfoStr = userInfoBaseResponse.getData();
+                if(!TextUtils.isEmpty(userInfoStr)) {
+                    userInfoStr = new String(Base64.decode(userInfoStr, Base64.DEFAULT));
+                    UserEntity.UserInfo userInfo = new  Gson().fromJson(userInfoStr, UserEntity.UserInfo.class);
+
+                    getView().showUserInfo(userInfo);
+
+                    userEntity.setUserInfo(userInfo);
+                    CacheDoubleUtils.getInstance().put("login_user", userEntity);
+                }
+            }
+
+            @Override
+            public boolean handleError(NetError netError) {
+                return false;
+            }
+        });
+    }
 
     public void editUserInfo(String name, String sex, String age) {
 
