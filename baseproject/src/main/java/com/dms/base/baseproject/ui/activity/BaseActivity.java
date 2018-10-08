@@ -2,28 +2,26 @@ package com.dms.base.baseproject.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ToastUtils;
-import com.dms.base.baseproject.mvp.factory.PresenterFactory;
+import com.dms.base.baseproject.mvp.provider.PresenterProvider;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.mvp.view.IView;
-import com.dms.base.baseproject.ui.delegate.IActivityDelegate;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivityDelegate<P>, IView {
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IView {
+
     private Unbinder mUnBinder;
 
     protected P mPresenter;
 
     @Override
     public P createPresenter() {
-        return PresenterFactory.createPresenter(this);
+        return PresenterProvider.createPresenter(this);
     }
 
     @Override

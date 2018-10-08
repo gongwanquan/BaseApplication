@@ -18,8 +18,8 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
     private WeakReference<V> mView;
 
     @Override
-    public void attachView(V view) {
-        mView = new WeakReference<V>(view);
+    public void attachView(IView view) {
+        mView = new WeakReference(view);
     }
 
     @Override

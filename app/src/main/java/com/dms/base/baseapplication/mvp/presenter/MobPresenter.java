@@ -45,6 +45,10 @@ public class MobPresenter extends BasePresenter<MobView> {
 
             @Override
             public boolean handleError(NetError netError) {
+                if(netError.isNoDataError()) {
+                    getView().showMessage("查询不到数据");
+                    return true;
+                }
                 return false;
             }
 

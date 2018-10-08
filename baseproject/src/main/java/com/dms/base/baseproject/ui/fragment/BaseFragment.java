@@ -6,10 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;;
 import com.blankj.utilcode.util.ToastUtils;
-import com.dms.base.baseproject.mvp.factory.PresenterFactory;
+import com.dms.base.baseproject.mvp.provider.PresenterProvider;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.mvp.view.IView;
-import com.dms.base.baseproject.ui.delegate.IFragmentDelegate;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -17,7 +16,8 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragmentDelegate<P>, IView {
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView {
+
     private View mRootView;
 
     private Unbinder mUnBinder;
@@ -28,7 +28,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     @Override
     public P createPresenter() {
-        return PresenterFactory.createPresenter(this);
+        return PresenterProvider.createPresenter(this);
     }
 
     @Override
@@ -39,9 +39,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void initData(Bundle savedInstanceState) {
     }
 
-    @Override
-    public void onLazyLoad() {
-
+    protected void onLazyLoad() {
     }
 
     @Override

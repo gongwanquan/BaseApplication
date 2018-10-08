@@ -1,8 +1,6 @@
 package com.dms.base.baseapplication.mvp.presenter;
 
 import android.text.TextUtils;
-
-import com.blankj.utilcode.util.CacheDoubleUtils;
 import com.blankj.utilcode.util.EncryptUtils;
 import com.dms.base.baseapplication.entity.BaseResponse;
 import com.dms.base.baseapplication.entity.UserEntity;

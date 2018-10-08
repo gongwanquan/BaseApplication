@@ -1,4 +1,4 @@
-package com.dms.base.baseproject.mvp.factory;
+package com.dms.base.baseproject.mvp.provider;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import com.dms.base.baseproject.ui.fragment.BaseFragment;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public class PresenterFactory {
+public class PresenterProvider {
 
     @Nullable
     public static <P extends IPresenter> P createPresenter(@NonNull BaseActivity baseActivity) {

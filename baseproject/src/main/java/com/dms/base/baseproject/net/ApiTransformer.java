@@ -23,12 +23,12 @@ public class ApiTransformer<T extends IModel> implements ObservableTransformer<T
                         if (t.isSuccess()) {
                             return Observable.just(t);
                         } else {
-                            if (t.isAuthError()) {
+                            if (t.isNull()) {
+                                throw new NetError(t.getMsg(), NetError.NO_DATA_ERROR, t.getCode());
+                            } else if (t.isAuthError()) {
                                 throw new NetError(t.getMsg(), NetError.AUTH_ERROR, t.getCode());
                             } else if (t.isBizError()) {
                                 throw new NetError(t.getMsg(), NetError.BUSINESS_ERROR, t.getCode());
-                            } else if (t.isNull()) {
-                                throw new NetError(t.getMsg(), NetError.NO_DATA_ERROR, t.getCode());
                             } else {
                                 throw new NetError(t.getMsg(), NetError.OTHER_ERROR, t.getCode());
                             }

@@ -2,28 +2,23 @@ package com.dms.base.baseapplication.ui.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.CacheDoubleUtils;
 import com.blankj.utilcode.util.EncryptUtils;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.entity.BaseResponse;
 import com.dms.base.baseapplication.entity.UserEntity;
-import com.dms.base.baseapplication.img.ImgLoadHelper;
 import com.dms.base.baseapplication.net.ApiManager;
-import com.dms.base.baseproject.img.LoaderFactory;
-import com.dms.base.baseproject.mvp.presenter.BasePresenter;
+import com.dms.base.baseproject.mvp.presenter.CommonPresenter;
 import com.dms.base.baseproject.net.ResponseListener;
 import com.dms.base.baseproject.net.error.NetError;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
-import com.dms.base.baseproject.ui.widget.TitleBar;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserActivity extends BaseUIActivity<BasePresenter> {
+public class UserActivity extends BaseUIActivity<CommonPresenter> {
 
     @BindView(R.id.username_et)
     EditText usernameEt;
@@ -41,8 +36,6 @@ public class UserActivity extends BaseUIActivity<BasePresenter> {
     public void onViewClicked() {
 //        mPresenter.login(usernameEt.getText().toString(), passwordEt.getText().toString());
         login();
-
-        ImgLoadHelper.loadCircleImage(this, "https://p2.ssl.qhimgs1.com/bdr/200_200_/t01b55948489accbdd2.jpg", sceneryIv);
     }
 
     private void login() {
@@ -53,6 +46,7 @@ public class UserActivity extends BaseUIActivity<BasePresenter> {
             return;
         }
         password = EncryptUtils.encryptMD5ToString(password);
+
         mPresenter.subscribe(ApiManager.getUserService().login(username, password), new ResponseListener<BaseResponse<UserEntity>>() {
             @Override
             public void onSuccess(BaseResponse<UserEntity> userEntityBaseResponse) {
@@ -78,6 +72,7 @@ public class UserActivity extends BaseUIActivity<BasePresenter> {
     protected void onErrorAndEmptyAction() {
         super.onErrorAndEmptyAction();
 //        mPresenter.login(usernameEt.getText().toString(), passwordEt.getText().toString());
+        login();
     }
 
 

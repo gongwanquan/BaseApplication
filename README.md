@@ -15,9 +15,9 @@ xxxActivity extends BaseUIActivity
 
 * 使用MVP模式，不新建Presenter
 ```
-xxxActivity extends BaseUIActivity<BasePresenter>
+xxxActivity extends BaseUIActivity<CommonPresenter>
 
-basePresenter.subscribe(xxxObservable, new ResponseListener<BaseResponse<xxxEntity>>() {
+mPresenter.subscribe(xxxObservable, new ResponseListener<BaseResponse<xxxEntity>>() {
             @Override
             public void onSuccess(BaseResponse<xxxEntity> userEntityBaseResponse) {
 

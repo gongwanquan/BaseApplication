@@ -28,6 +28,12 @@ public class BaseResponse<T> implements IModel<T> {
         return 200 == retCode;
     }
 
+    @Override
+    public boolean isNull() {
+        return null == result
+                || (result instanceof Collection && ((Collection) result).isEmpty())
+                || (result instanceof Map && ((Map) result).isEmpty());
+    }
 
     @Override
     public boolean isAuthError() {
@@ -37,13 +43,6 @@ public class BaseResponse<T> implements IModel<T> {
     @Override
     public boolean isBizError() {
         return 200 != retCode && 10001 != retCode;
-    }
-
-    @Override
-    public boolean isNull() {
-        return null == result
-                || (result instanceof Collection && ((Collection) result).isEmpty())
-                || (result instanceof Map && ((Map) result).isEmpty());
     }
 
     @Override
