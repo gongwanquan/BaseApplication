@@ -1,8 +1,8 @@
 package com.dms.base.baseapplication.net;
 
 
-import com.dms.base.baseapplication.entity.BaseResponse;
-import com.dms.base.baseapplication.entity.UserEntity;
+import com.dms.base.baseapplication.model.BaseResponse;
+import com.dms.base.baseapplication.model.UserEntity;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

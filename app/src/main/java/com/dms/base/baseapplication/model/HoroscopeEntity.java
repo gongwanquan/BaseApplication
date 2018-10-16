@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication.entity;
+package com.dms.base.baseapplication.model;
 
 public class HoroscopeEntity {
 

@@ -1,6 +1,9 @@
 package com.dms.base.baseapplication;
 
 import android.app.Application;
+import android.util.Log;
+
+import com.blankj.utilcode.util.LogUtils;
 import com.dms.base.baseapplication.net.KeyInterceptor;
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.NetProvider;
@@ -12,7 +15,15 @@ public class APP extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG);
+
         ApiClient.registerProvider(new NetProvider() {
+            @Override
+            public String configBaseUrl() {
+                return BaseConfig.BASE_URL;
+            }
+
             @Override
             public long configConnectTimeoutSeconds() {
                 return 0;
@@ -35,7 +46,7 @@ public class APP extends Application {
 
             @Override
             public boolean dispatchProgressEnable() {
-                return false;
+                return true;
             }
 
             @Override

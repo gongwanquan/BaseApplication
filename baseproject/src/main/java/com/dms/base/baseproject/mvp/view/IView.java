@@ -2,6 +2,7 @@ package com.dms.base.baseproject.mvp.view;
 
 
 import android.os.Bundle;
+
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.net.error.NetError;
 import com.trello.rxlifecycle2.LifecycleTransformer;

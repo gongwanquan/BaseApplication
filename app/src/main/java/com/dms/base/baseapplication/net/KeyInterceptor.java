@@ -1,7 +1,7 @@
 package com.dms.base.baseapplication.net;
 
-import java.io.IOException;
 
+import java.io.IOException;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -17,7 +17,10 @@ public class KeyInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        HttpUrl httpUrl = request.url().newBuilder().addQueryParameter("key", "1782b51bf7718").build();
+        HttpUrl httpUrl = request.url();
+        if("apicloud.mob.com".equals(httpUrl.host())) {
+             httpUrl = httpUrl.newBuilder().addQueryParameter("key", "1782b51bf7718").build();
+        }
 
         return chain.proceed(request.newBuilder().url(httpUrl).build());
     }

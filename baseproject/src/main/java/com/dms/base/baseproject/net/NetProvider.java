@@ -9,6 +9,8 @@ import okhttp3.OkHttpClient;
  */
 
 public interface NetProvider {
+    String configBaseUrl();
+
     long configConnectTimeoutSeconds();
 
     long configReadTimeoutSeconds();
@@ -24,6 +26,4 @@ public interface NetProvider {
     void configHttps(OkHttpClient.Builder builder);
 
     boolean configLogEnable();
-
-
 }

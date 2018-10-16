@@ -3,13 +3,10 @@ package com.dms.base.baseapplication.ui.fragment;
 
 import android.os.Bundle;
 import android.widget.EditText;
-
-import com.blankj.utilcode.util.CacheDoubleUtils;
 import com.dms.base.baseapplication.R;
-import com.dms.base.baseapplication.entity.UserEntity;
+import com.dms.base.baseapplication.model.UserEntity;
 import com.dms.base.baseapplication.mvp.presenter.EditUserInfoPresenter;
 import com.dms.base.baseproject.ui.fragment.BaseUiFragment;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

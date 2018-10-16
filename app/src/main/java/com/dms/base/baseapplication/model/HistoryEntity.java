@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication.entity;
+package com.dms.base.baseapplication.model;
 
 /**
  * Created by 龚万全 on 2016/9/27.

@@ -3,8 +3,6 @@ package com.dms.base.baseproject.net;
 
 import com.dms.base.baseproject.net.interceptor.LogInterceptor;
 import com.dms.base.baseproject.net.progress.ProgressHelper;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -15,15 +13,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private NetProvider mDefaultProvider;
-
     private int mDefConnectTimeout = 10, mDefWriteTimeout = 10, mDefReadTimeout = 30;
 
-    private Map<String, NetProvider> mProviderMap = new HashMap<>();
+    private NetProvider mNetProvider;
 
-    private Map<String, Retrofit> mRetrofitMap = new HashMap<>();
+    private Retrofit mRetrofit;
 
-    private Map<NetProvider, OkHttpClient> mHttpClientMap = new HashMap<>();
+    private OkHttpClient mHttpClient;
 
     private ApiClient() {
 
@@ -38,105 +34,84 @@ public class ApiClient {
     }
 
     public static void registerProvider(NetProvider provider) {
-        getInstance().mDefaultProvider = provider;
+        getInstance().mNetProvider = provider;
     }
 
-    public static void registerProvider(String baseUrl, NetProvider provider) {
-        getInstance().mProviderMap.put(baseUrl, provider);
-    }
-
-    public Retrofit getRetrofit(String baseUrl, NetProvider provider) {
-        if (HttpUrl.parse(baseUrl) == null) {
-            throw new IllegalStateException("baseUrl can not be null");
-        }
-
-        if (null != mRetrofitMap.get(baseUrl)) {
-            return mRetrofitMap.get(baseUrl);
-        }
-
-        if (null == provider) {
-            provider = mProviderMap.get(baseUrl);
-            if (null == provider) {
-                provider = mDefaultProvider;
+    public Retrofit getRetrofit() {
+        if (null == mRetrofit) {
+            if (null == mNetProvider) {
+                throw new IllegalStateException("must register provider first");
             }
+
+            String baseUrl = mNetProvider.configBaseUrl();
+            if (HttpUrl.parse(baseUrl) == null) {
+                throw new IllegalStateException("baseUrl can not be null");
+            }
+
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(getHttpClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+
+            mRetrofit = builder.build();
+
         }
 
-        if (provider == null) {
-            throw new IllegalStateException("must register provider first");
-        }
-
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(getHttpClient(provider))
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
-
-        Retrofit retrofit = builder.build();
-        mRetrofitMap.put(baseUrl, retrofit);
-        mProviderMap.put(baseUrl, provider);
-
-        return retrofit;
+        return mRetrofit;
     }
 
-    public OkHttpClient getHttpClient(NetProvider provider) {
+    public OkHttpClient getHttpClient() {
 
-        if (null != mHttpClientMap.get(provider)) {
-            return mHttpClientMap.get(provider);
-        }
-
-        if (null == provider) {
-            provider = mDefaultProvider;
-        }
-
-        if (provider == null) {
-            throw new IllegalStateException("must register provider first");
-        }
-
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-        builder.connectTimeout(
-                provider.configConnectTimeoutSeconds() != 0
-                        ? provider.configConnectTimeoutSeconds()
-                        : mDefConnectTimeout, TimeUnit.SECONDS);
-        builder.writeTimeout(
-                provider.configWriteTimeoutSeconds() != 0
-                        ? provider.configWriteTimeoutSeconds()
-                        : mDefWriteTimeout, TimeUnit.SECONDS);
-        builder.readTimeout(
-                provider.configReadTimeoutSeconds() != 0
-                        ? provider.configReadTimeoutSeconds()
-                        : mDefReadTimeout, TimeUnit.SECONDS
-        );
-
-
-        CookieJar cookieJar = provider.configCookie();
-        if (cookieJar != null) {
-            builder.cookieJar(cookieJar);
-        }
-
-        if (provider.dispatchProgressEnable()) {
-            builder.addInterceptor(ProgressHelper.get().getInterceptor());
-        }
-
-        Interceptor[] interceptors = provider.configInterceptors();
-        if (interceptors != null && interceptors.length != 0) {
-            for (Interceptor interceptor : interceptors) {
-                builder.addInterceptor(interceptor);
+        if (null == mHttpClient) {
+            if (null == mNetProvider) {
+                throw new IllegalStateException("must register provider first");
             }
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+            builder.connectTimeout(
+                    mNetProvider.configConnectTimeoutSeconds() != 0
+                            ? mNetProvider.configConnectTimeoutSeconds()
+                            : mDefConnectTimeout, TimeUnit.SECONDS);
+            builder.writeTimeout(
+                    mNetProvider.configWriteTimeoutSeconds() != 0
+                            ? mNetProvider.configWriteTimeoutSeconds()
+                            : mDefWriteTimeout, TimeUnit.SECONDS);
+            builder.readTimeout(
+                    mNetProvider.configReadTimeoutSeconds() != 0
+                            ? mNetProvider.configReadTimeoutSeconds()
+                            : mDefReadTimeout, TimeUnit.SECONDS
+            );
+
+
+            CookieJar cookieJar = mNetProvider.configCookie();
+            if (cookieJar != null) {
+                builder.cookieJar(cookieJar);
+            }
+
+            if (mNetProvider.dispatchProgressEnable()) {
+                builder.addInterceptor(ProgressHelper.get().getInterceptor());
+            }
+
+            Interceptor[] interceptors = mNetProvider.configInterceptors();
+            if (interceptors != null && interceptors.length != 0) {
+                for (Interceptor interceptor : interceptors) {
+                    builder.addInterceptor(interceptor);
+                }
+            }
+
+            mNetProvider.configHttps(builder);
+
+            if (mNetProvider.configLogEnable()) {
+                LogInterceptor logInterceptor = new LogInterceptor();
+                builder.addInterceptor(logInterceptor);
+            }
+
+            mHttpClient = builder.build();
         }
 
-        provider.configHttps(builder);
-
-        if (provider.configLogEnable()) {
-            LogInterceptor logInterceptor = new LogInterceptor();
-            builder.addInterceptor(logInterceptor);
-        }
-
-        OkHttpClient httpClient = builder.build();
-
-        mHttpClientMap.put(provider, httpClient);
-
-        return httpClient;
+        return mHttpClient;
     }
 
 }

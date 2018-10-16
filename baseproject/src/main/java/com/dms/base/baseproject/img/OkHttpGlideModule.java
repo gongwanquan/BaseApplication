@@ -19,7 +19,7 @@ public class OkHttpGlideModule extends AppGlideModule {
 
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
-        OkHttpClient okHttpClient = ApiClient.getInstance().getHttpClient(null);
+        OkHttpClient okHttpClient = ApiClient.getInstance().getHttpClient();
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(okHttpClient));
     }
 }

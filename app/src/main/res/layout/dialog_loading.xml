@@ -15,6 +15,7 @@
         android:indeterminateDrawable="@drawable/rotate_loading" />
 
     <TextView
+        android:id="@+id/loading_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

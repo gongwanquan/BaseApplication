@@ -1,10 +1,10 @@
 package com.dms.base.baseapplication.mvp.presenter;
 
-import com.dms.base.baseapplication.entity.DictionaryEntity;
-import com.dms.base.baseapplication.entity.HistoryEntity;
-import com.dms.base.baseapplication.entity.HoroscopeEntity;
-import com.dms.base.baseapplication.entity.BaseResponse;
-import com.dms.base.baseapplication.entity.IdiomEntity;
+import com.dms.base.baseapplication.model.DictionaryEntity;
+import com.dms.base.baseapplication.model.HistoryEntity;
+import com.dms.base.baseapplication.model.HoroscopeEntity;
+import com.dms.base.baseapplication.model.BaseResponse;
+import com.dms.base.baseapplication.model.IdiomEntity;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.net.ApiManager;
 import com.dms.base.baseapplication.net.ApiStore;
@@ -25,11 +25,15 @@ public class MobPresenter extends BasePresenter<MobView> {
         subscribe(mApiStore.getHistory(date), new ResponseListener<BaseResponse<List<HistoryEntity>>>() {
             @Override
             public void onSuccess(BaseResponse<List<HistoryEntity>> listBaseResponse) {
-                getView().showHistory(listBaseResponse.getData().get(0));
+                getView().showHistory(listBaseResponse.getData());
             }
 
             @Override
             public boolean handleError(NetError netError) {
+                if(netError.isNoDataError()) {
+                    getView().showMessage("查询不到数据");
+                    return true;
+                }
                 return false;
             }
 
@@ -64,8 +68,8 @@ public class MobPresenter extends BasePresenter<MobView> {
 
             @Override
             public boolean handleError(NetError netError) {
-                if (netError.isAuthError()) {
-                    getView().showMessage(netError.getMessage());
+                if(netError.isNoDataError()) {
+                    getView().showMessage("查询不到数据");
                     return true;
                 }
                 return false;
@@ -75,7 +79,7 @@ public class MobPresenter extends BasePresenter<MobView> {
         });
     }
 
-    public void horoscope(String date, String hour) {
+    public void queryHoroscope(String date, String hour) {
         subscribe(mApiStore.horoscope(date, hour), new ResponseListener<BaseResponse<HoroscopeEntity>>() {
             @Override
             public void onSuccess(BaseResponse<HoroscopeEntity> horoscopeEntityBaseResponse) {
@@ -84,6 +88,10 @@ public class MobPresenter extends BasePresenter<MobView> {
 
             @Override
             public boolean handleError(NetError netError) {
+                if(netError.isNoDataError()) {
+                    getView().showMessage("查询不到数据");
+                    return true;
+                }
                 return false;
             }
 

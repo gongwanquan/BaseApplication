@@ -2,8 +2,8 @@ package com.dms.base.baseapplication.mvp.presenter;
 
 import android.text.TextUtils;
 import com.blankj.utilcode.util.EncryptUtils;
-import com.dms.base.baseapplication.entity.BaseResponse;
-import com.dms.base.baseapplication.entity.UserEntity;
+import com.dms.base.baseapplication.model.BaseResponse;
+import com.dms.base.baseapplication.model.UserEntity;
 import com.dms.base.baseapplication.net.ApiManager;
 import com.dms.base.baseapplication.ui.activity.UserActivity;
 import com.dms.base.baseproject.mvp.presenter.BasePresenter;

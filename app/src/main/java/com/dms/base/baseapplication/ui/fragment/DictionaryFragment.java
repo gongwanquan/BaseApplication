@@ -2,14 +2,16 @@ package com.dms.base.baseapplication.ui.fragment;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import com.dms.base.baseapplication.entity.DictionaryEntity;
-import com.dms.base.baseapplication.entity.HistoryEntity;
-import com.dms.base.baseapplication.entity.HoroscopeEntity;
-import com.dms.base.baseapplication.entity.IdiomEntity;
+import com.dms.base.baseapplication.model.DictionaryEntity;
+import com.dms.base.baseapplication.model.HistoryEntity;
+import com.dms.base.baseapplication.model.HoroscopeEntity;
+import com.dms.base.baseapplication.model.IdiomEntity;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseproject.ui.fragment.BaseUiFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -56,7 +58,7 @@ public class DictionaryFragment extends BaseUiFragment<MobPresenter> implements 
     }
 
     @Override
-    public void showHistory(HistoryEntity historyEntity) {
+    public void showHistory(List<HistoryEntity> historyEntity) {
 
     }
 

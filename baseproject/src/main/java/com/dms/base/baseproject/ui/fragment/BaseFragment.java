@@ -100,7 +100,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return false;
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -7,10 +7,12 @@ public class ApiManager {
 
     private static UserService mUserService;
 
+    private static FileService mFileService;
+
     public static ApiStore getApiStore() {
         if (null == mApiStore) {
             mApiStore = ApiClient.getInstance()
-                    .getRetrofit("http://apicloud.mob.com/", null)
+                    .getRetrofit()
                     .create(ApiStore.class);
         }
         return mApiStore;
@@ -19,10 +21,20 @@ public class ApiManager {
     public static UserService getUserService() {
         if (null == mUserService) {
             mUserService = ApiClient.getInstance()
-                    .getRetrofit("http://apicloud.mob.com/", null)
+                    .getRetrofit()
                     .create(UserService.class);
         }
 
         return mUserService;
+    }
+
+    public static FileService getFileService() {
+        if(null == mFileService) {
+            mFileService = ApiClient.getInstance()
+                    .getRetrofit()
+                    .create(FileService.class);
+        }
+
+        return mFileService;
     }
 }

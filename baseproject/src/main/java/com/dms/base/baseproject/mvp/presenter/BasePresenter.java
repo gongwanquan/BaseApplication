@@ -2,10 +2,12 @@ package com.dms.base.baseproject.mvp.presenter;
 
 import com.dms.base.baseproject.mvp.view.IView;
 import com.dms.base.baseproject.net.ApiObserver;
-import com.dms.base.baseproject.net.ApiTransformer;
+import com.dms.base.baseproject.net.transformer.ApiTransformer;
 import com.dms.base.baseproject.net.error.NetError;
 import com.dms.base.baseproject.net.model.IModel;
 import com.dms.base.baseproject.net.ResponseListener;
+import com.dms.base.baseproject.net.transformer.SchedulerTransformer;
+
 import java.lang.ref.WeakReference;
 import io.reactivex.Observable;
 
@@ -41,7 +43,8 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
     public <T extends IModel> void subscribe(Observable<T> observable, final ResponseListener<T> responseListener) {
         getView().showLoading();
 
-        observable.compose(new ApiTransformer<T>())
+        observable.compose(new SchedulerTransformer<T>())
+                .compose(new ApiTransformer<T>())
                 .compose(getView().bindLifecycle())
                 .subscribe(new ApiObserver<T>() {
                     @Override
