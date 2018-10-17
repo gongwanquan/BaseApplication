@@ -5,17 +5,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;;
-import com.blankj.utilcode.util.KeyboardUtils;
+import android.view.ViewGroup;
 import com.blankj.utilcode.util.ToastUtils;
-import com.dms.base.baseproject.mvp.provider.PresenterProvider;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
+import com.dms.base.baseproject.mvp.provider.PresenterProvider;
 import com.dms.base.baseproject.mvp.view.IView;
-import com.dms.base.baseproject.permission.IPermissionCallback;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
+
+;
 
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IView {
 
@@ -96,21 +95,6 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         }
 
         return false;
-    }
-
-    @Override
-    public void requestPermission(String permission, final IPermissionCallback callback) {
-        if(null == mRxPermissions) {
-            mRxPermissions = new RxPermissions(this);
-        }
-
-        mRxPermissions.request(permission)
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        callback.onPermissionResult(aBoolean);
-                    }
-                });
     }
 
     @Override

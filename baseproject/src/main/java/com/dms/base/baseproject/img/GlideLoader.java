@@ -101,7 +101,10 @@ public class GlideLoader implements ILoader {
 
         }
 
-        requestOptions.skipMemoryCache(options.isSkipMemoryCache());
+        if(options.isSkipCache()) {
+            requestOptions.skipMemoryCache(true);
+            requestOptions.diskCacheStrategy(DiskCacheStrategy.NONE);
+        }
 
         if (null != options.getAnimator()) {
             requestBuilder.transition(GenericTransitionOptions.with(options.getAnimator()));

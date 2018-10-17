@@ -1,8 +1,6 @@
 package com.dms.base.baseproject.img;
 
 
-import android.app.TimePickerDialog;
-
 import com.bumptech.glide.request.transition.ViewPropertyTransition;
 
 public class LoaderOptions {
@@ -19,7 +17,7 @@ public class LoaderOptions {
     //是否平滑加载图片
     private boolean mIsCrossFade = false;
     //是否跳过缓存
-    private boolean mIsSkipMemoryCache = false;
+    private boolean mIsSkipCache = false;
     //图片加载动画
     private ViewPropertyTransition.Animator mAnimator;
 
@@ -30,7 +28,7 @@ public class LoaderOptions {
         mIsCircle = builder.mIsCircle;
         mRadius = builder.mRadius;
         mIsCrossFade = builder.mIsCrossFade;
-        mIsSkipMemoryCache = builder.mIsSkipMemoryCache;
+        mIsSkipCache = builder.mIsSkipCache;
         mAnimator = builder.mAnimator;
     }
 
@@ -58,8 +56,8 @@ public class LoaderOptions {
         return mIsCrossFade;
     }
 
-    public boolean isSkipMemoryCache() {
-        return mIsSkipMemoryCache;
+    public boolean isSkipCache() {
+        return mIsSkipCache;
     }
 
     public ViewPropertyTransition.Animator getAnimator() {
@@ -106,7 +104,7 @@ public class LoaderOptions {
         //是否平滑加载图片
         private boolean mIsCrossFade = false;
         //是否跳过缓存
-        private boolean mIsSkipMemoryCache = false;
+        private boolean mIsSkipCache = false;
         //图片加载动画
         private ViewPropertyTransition.Animator mAnimator;
 
@@ -140,8 +138,8 @@ public class LoaderOptions {
             return this;
         }
 
-        public Builder setSkipMemoryCache(boolean skipMemoryCache) {
-            mIsSkipMemoryCache = skipMemoryCache;
+        public Builder setSkipCache(boolean skipCache) {
+            mIsSkipCache = skipCache;
             return this;
         }
 

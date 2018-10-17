@@ -3,6 +3,7 @@
     package="com.dms.base.baseapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
@@ -15,21 +16,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".ui.activity.MainActivity">
+
+        </activity>
+        <activity android:name=".ui.activity.AnotherActivity" />
+        <activity android:name=".ui.activity.UserActivity" />
+        <activity android:name=".ui.activity.DownloadActivity"></activity>
+        <activity android:name=".ui.activity.LeetCodeActivity"></activity>
+
+        <activity android:name=".ui.activity.GetPhotoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.AnotherActivity" />
-        <activity android:name=".ui.activity.UserActivity" />
-        <activity android:name=".ui.activity.DownloadActivity">
-
-        </activity>
-
-        <activity android:name=".ui.activity.LeetCodeActivity">
-
         </activity>
 
         <provider
@@ -41,7 +42,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
 
     </application>
 

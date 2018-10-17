@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.net.error.NetError;
-import com.dms.base.baseproject.permission.IPermissionCallback;
 
 public interface IView {
 
@@ -24,6 +23,4 @@ public interface IView {
     void showMessage(CharSequence charSequence);
 
     void showError(NetError netError);
-
-    void requestPermission(String permission, final IPermissionCallback callback);
 }
