@@ -2,27 +2,30 @@ package com.dms.base.baseproject.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dms.base.baseproject.mvp.provider.PresenterProvider;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.mvp.view.IView;
-import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.components.support.RxFragment;
-
+import com.dms.base.baseproject.permission.IPermissionCallback;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.functions.Consumer;
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView {
+public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IView {
 
     private View mRootView;
 
     private Unbinder mUnBinder;
 
     protected P mPresenter;
+
+    private RxPermissions mRxPermissions;
 
     private boolean mIsViewInitiated, mIsVisibleToUser, mIsDataInitiated;
 
@@ -40,11 +43,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
     protected void onLazyLoad() {
-    }
-
-    @Override
-    public LifecycleTransformer bindLifecycle() {
-        return bindUntilEvent(FragmentEvent.DESTROY_VIEW);
     }
 
     @Override
@@ -98,6 +96,21 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         }
 
         return false;
+    }
+
+    @Override
+    public void requestPermission(String permission, final IPermissionCallback callback) {
+        if(null == mRxPermissions) {
+            mRxPermissions = new RxPermissions(this);
+        }
+
+        mRxPermissions.request(permission)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        callback.onPermissionResult(aBoolean);
+                    }
+                });
     }
 
     @Override

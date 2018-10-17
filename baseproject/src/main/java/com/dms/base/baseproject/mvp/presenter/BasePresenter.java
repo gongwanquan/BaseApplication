@@ -7,17 +7,18 @@ import com.dms.base.baseproject.net.error.NetError;
 import com.dms.base.baseproject.net.model.IModel;
 import com.dms.base.baseproject.net.ResponseListener;
 import com.dms.base.baseproject.net.transformer.SchedulerTransformer;
-
 import java.lang.ref.WeakReference;
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 
 public class BasePresenter<V extends IView> implements IPresenter<V> {
 
-    public BasePresenter() {
-    }
-
     private WeakReference<V> mView;
+
+    private CompositeDisposable mCompositeDisposable;
+
 
     @Override
     public void attachView(IView view) {
@@ -26,6 +27,10 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
 
     @Override
     public void detachView() {
+        if(null != mCompositeDisposable && !mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.clear();
+        }
+
         if (mView.get() != null) {
             mView.clear();
         }
@@ -40,12 +45,18 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
         return mView.get();
     }
 
+    public void addDisposable(Disposable disposable) {
+        if(null == mCompositeDisposable) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(disposable);
+    }
+
     public <T extends IModel> void subscribe(Observable<T> observable, final ResponseListener<T> responseListener) {
         getView().showLoading();
 
         observable.compose(new SchedulerTransformer<T>())
                 .compose(new ApiTransformer<T>())
-                .compose(getView().bindLifecycle())
                 .subscribe(new ApiObserver<T>() {
                     @Override
                     public void onSuccess(T t) {
@@ -58,6 +69,11 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
                         if (!responseListener.handleError(netError)) {
                             getView().showError(netError);
                         }
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addDisposable(d);
                     }
 
                     @Override

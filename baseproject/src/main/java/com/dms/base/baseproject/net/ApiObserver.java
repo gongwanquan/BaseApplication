@@ -7,9 +7,10 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import io.reactivex.observers.ResourceObserver;
+import io.reactivex.Observer;
 
-public abstract class ApiObserver<T extends IModel> extends ResourceObserver<T> {
+public abstract class ApiObserver<T extends IModel> implements Observer<T> {
+
     @Override
     public void onNext(T result) {
         onSuccess(result);

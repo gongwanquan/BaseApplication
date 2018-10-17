@@ -3,13 +3,10 @@ package com.dms.base.baseapplication.ui.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.model.DictionaryEntity;
@@ -18,13 +15,9 @@ import com.dms.base.baseapplication.model.HoroscopeEntity;
 import com.dms.base.baseapplication.model.IdiomEntity;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
-import com.dms.base.baseapplication.ui.widget.LoadingDialog;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
-
 import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseUIActivity<MobPresenter> implements MobView {
@@ -80,31 +73,30 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
                 }
             }
         });
+
     }
 
     @OnClick(R.id.get_data_btn)
     public void onViewClicked() {
-//        KeyboardUtils.hideSoftInput(this);
-//
-//        if (mDataType == 4) {
-//            mPresenter.queryHoroscope(dateEt.getText().toString(), hourEt.getText().toString());
-//        } else {
-//            mInput = inputEt.getText().toString();
-//            if (TextUtils.isEmpty(mInput)) {
-//                showMessage("输入内容不能为空");
-//                return;
-//            }
-//            if (mDataType == 1) {
-//                mPresenter.queryDictionary(mInput);
-//            } else if (mDataType == 2) {
-//                mPresenter.queryIdiom(mInput);
-//            } else if (mDataType == 3) {
-//                mPresenter.queryHistory(mInput);
-//            }
-//        }
+        KeyboardUtils.hideSoftInput(this);
 
-        LoadingDialog loadingDialog = new LoadingDialog();
-        loadingDialog.show(getSupportFragmentManager(), "loading");
+        if (mDataType == 4) {
+            mPresenter.queryHoroscope(dateEt.getText().toString(), hourEt.getText().toString());
+        } else {
+            mInput = inputEt.getText().toString();
+            if (TextUtils.isEmpty(mInput)) {
+                showMessage("输入内容不能为空");
+                return;
+            }
+            if (mDataType == 1) {
+                mPresenter.queryDictionary(mInput);
+            } else if (mDataType == 2) {
+                mPresenter.queryIdiom(mInput);
+            } else if (mDataType == 3) {
+                mPresenter.queryHistory(mInput);
+            }
+        }
+
     }
 
     @Override
