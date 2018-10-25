@@ -33,17 +33,20 @@
         android:padding="15dp"
         android:visibility="gone" />
 
-    <RadioGroup
+    <com.dms.base.baseapplication.ui.widget.GridRadioGroup
         android:id="@+id/data_type_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:horizontalSpacing="10dp"
+        app:numColumns="4"
+        app:verticalSpacing="10dp">
 
         <RadioButton
             android:id="@+id/dictionary_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:checked="true"
             android:text="字典" />
 
@@ -51,23 +54,26 @@
             android:id="@+id/idiom_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:text="成语" />
 
         <RadioButton
             android:id="@+id/history_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:text="历史" />
 
         <RadioButton
             android:id="@+id/horoscope_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:text="算命" />
-    </RadioGroup>
+
+        <RadioButton
+            android:id="@+id/perpetual_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="万年历" />
+    </com.dms.base.baseapplication.ui.widget.GridRadioGroup>
 
     <ScrollView
         android:layout_width="match_parent"

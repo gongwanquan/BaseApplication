@@ -9,12 +9,9 @@ import com.dms.base.baseproject.ui.dialog.BaseDialog;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
-import io.reactivex.subjects.PublishSubject;
 
 
 public class LoadingDialog extends BaseDialog {
@@ -30,7 +27,7 @@ public class LoadingDialog extends BaseDialog {
 
     @Override
     public void initView(View v) {
-
+        ButterKnife.bind(this, v);
     }
 
     @Override

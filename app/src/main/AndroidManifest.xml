@@ -18,19 +18,23 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".ui.activity.MainActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.AnotherActivity" />
-        <activity android:name=".ui.activity.UserActivity" />
-        <activity android:name=".ui.activity.DownloadActivity"></activity>
-        <activity android:name=".ui.activity.LeetCodeActivity"></activity>
-
-        <activity android:name=".ui.activity.GetPhotoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.AnotherActivity" />
+        <activity android:name=".ui.activity.UserActivity" />
+        <activity android:name=".ui.activity.DownloadActivity">
+
+        </activity>
+        <activity android:name=".ui.activity.LeetCodeActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.GetPhotoActivity">
+
         </activity>
 
         <provider

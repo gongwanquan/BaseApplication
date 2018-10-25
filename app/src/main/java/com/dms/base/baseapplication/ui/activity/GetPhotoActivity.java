@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 import com.dms.base.baseapplication.BuildConfig;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.img.Glide4Engine;
 import com.dms.base.baseapplication.img.ImgLoadHelper;
+import com.dms.base.baseapplication.ui.widget.InputDialog;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhihu.matisse.Matisse;
@@ -21,19 +23,25 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 public class GetPhotoActivity extends BaseUIActivity {
-
-    private final int REQUEST_CODE_CHOOSE = 10001;
-
-    private final int REQUEST_PICKER_AND_CROP = 10002;
-
     @BindView(R.id.result_iv)
     ImageView resultIv;
+
+    private List<Uri> mSelected;
+
+    private Uri mOutPutUri;
+
+    private final int REQUEST_CHOOSE = 10001;
+
+    private final int REQUEST_CROP = 10002;
+
 
     @Override
     public int getLayoutId() {
@@ -42,7 +50,7 @@ public class GetPhotoActivity extends BaseUIActivity {
 
     @OnClick(R.id.get_photo_btn)
     public void onViewClicked() {
-        getPhoto();
+        getPhoto(REQUEST_CHOOSE);
     }
 
     @Override
@@ -51,7 +59,7 @@ public class GetPhotoActivity extends BaseUIActivity {
         mTitleBar.setTitle("照片");
     }
 
-    private void getPhoto() {
+    private void getPhoto(final int requestCode) {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
@@ -70,7 +78,7 @@ public class GetPhotoActivity extends BaseUIActivity {
                                     .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                                     .thumbnailScale(0.85f)
                                     .imageEngine(new Glide4Engine())
-                                    .forResult(REQUEST_CODE_CHOOSE);
+                                    .forResult(requestCode);
                         } else {
                             showMessage("图片选择需要相机以及文件选择权限！");
                         }
@@ -79,19 +87,37 @@ public class GetPhotoActivity extends BaseUIActivity {
 
     }
 
-    List<Uri> mSelected;
-    Uri mOutPutUri;
+    private void cropImg(Uri uri, int requestCode) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(mSelected.get(0), "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
+        intent.putExtra("scale", true);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.putExtra("return-data", false);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
+        intent = Intent.createChooser(intent, "裁剪图片");
+        startActivityForResult(intent, requestCode);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if(requestCode == REQUEST_CODE_CHOOSE ) {
+            if (requestCode == REQUEST_CHOOSE) {
                 mSelected = Matisse.obtainResult(data);
                 if (null != mSelected && !mSelected.isEmpty()) {
 
-                    File outputFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "temp.jpg");
-                    if(!outputFile.exists()) {
+                    File outputFile = new File(Environment.getExternalStorageDirectory().getPath()
+                            + File.separator
+                            + new SimpleDateFormat("MM_dd_HH_mm_ss").format(new Date())
+                            + "_crop.jpg");
+                    Log.i("gwq", outputFile.getAbsolutePath());
+                    if (!outputFile.exists()) {
                         try {
                             outputFile.createNewFile();
                         } catch (IOException e) {
@@ -100,24 +126,11 @@ public class GetPhotoActivity extends BaseUIActivity {
                     }
                     mOutPutUri = Uri.fromFile(outputFile);
 
+                    cropImg(mOutPutUri, REQUEST_CROP);
 
-                    Intent intent = new Intent("com.android.camera.action.CROP");
-                    intent.setDataAndType(mSelected.get(0), "image/*");
-                    intent.putExtra("crop", "true");
-                    intent.putExtra("aspectX", 1);
-                    intent.putExtra("aspectY", 1);
-                    intent.putExtra("outputX", 300);
-                    intent.putExtra("outputY", 300);
-                    intent.putExtra("scale", true);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mOutPutUri);
-                    intent.putExtra("return-data", false);
-                    intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-                    intent.putExtra("noFaceDetection", true); // no face detection
-                    intent = Intent.createChooser(intent, "裁剪图片");
-                    startActivityForResult(intent, REQUEST_PICKER_AND_CROP);
 
                 }
-            } else if(requestCode == REQUEST_PICKER_AND_CROP) {
+            } else if (requestCode == REQUEST_CROP) {
                 ImgLoadHelper.loadCircleImage(this, mOutPutUri, resultIv);
             }
 

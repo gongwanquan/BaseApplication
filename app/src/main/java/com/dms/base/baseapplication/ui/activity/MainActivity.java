@@ -7,16 +7,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.model.DictionaryEntity;
 import com.dms.base.baseapplication.model.HistoryEntity;
 import com.dms.base.baseapplication.model.HoroscopeEntity;
 import com.dms.base.baseapplication.model.IdiomEntity;
+import com.dms.base.baseapplication.model.PerpetualCalendar;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -60,12 +64,18 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
                     mDataType = 3;
                 } else if (checkedId == R.id.horoscope_rb) {
                     mDataType = 4;
+                } else if (checkedId == R.id.perpetual_rb) {
+                    mDataType = 5;
                 }
 
                 if (mDataType == 4) {
                     inputEt.setVisibility(View.GONE);
                     dateEt.setVisibility(View.VISIBLE);
                     hourEt.setVisibility(View.VISIBLE);
+                } else if (mDataType == 5) {
+                    inputEt.setVisibility(View.GONE);
+                    dateEt.setVisibility(View.VISIBLE);
+                    hourEt.setVisibility(View.GONE);
                 } else {
                     inputEt.setVisibility(View.VISIBLE);
                     dateEt.setVisibility(View.GONE);
@@ -82,7 +92,9 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
 
         if (mDataType == 4) {
             mPresenter.queryHoroscope(dateEt.getText().toString(), hourEt.getText().toString());
-        } else {
+        } else if(mDataType == 5) {
+            mPresenter.queryPerpetual(dateEt.getText().toString());
+        }else {
             mInput = inputEt.getText().toString();
             if (TextUtils.isEmpty(mInput)) {
                 showMessage("输入内容不能为空");
@@ -129,6 +141,11 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
     @Override
     public void showHoroscope(HoroscopeEntity horoscopeEntity) {
         resultTv.setText(horoscopeEntity.toString());
+    }
+
+    @Override
+    public void showPerpetual(PerpetualCalendar perpetualCalendar) {
+        resultTv.setText(perpetualCalendar.toString());
     }
 
 }

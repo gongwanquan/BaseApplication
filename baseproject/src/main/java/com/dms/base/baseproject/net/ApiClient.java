@@ -1,13 +1,14 @@
 package com.dms.base.baseproject.net;
 
 
-import com.dms.base.baseproject.net.interceptor.LogInterceptor;
-import com.dms.base.baseproject.net.progress.ProgressHelper;
 import java.util.concurrent.TimeUnit;
+import me.jessyan.progressmanager.ProgressManager;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -74,24 +75,34 @@ public class ApiClient {
                     mNetProvider.configConnectTimeoutSeconds() != 0
                             ? mNetProvider.configConnectTimeoutSeconds()
                             : mDefConnectTimeout, TimeUnit.SECONDS);
+
             builder.writeTimeout(
                     mNetProvider.configWriteTimeoutSeconds() != 0
                             ? mNetProvider.configWriteTimeoutSeconds()
                             : mDefWriteTimeout, TimeUnit.SECONDS);
+
             builder.readTimeout(
                     mNetProvider.configReadTimeoutSeconds() != 0
                             ? mNetProvider.configReadTimeoutSeconds()
-                            : mDefReadTimeout, TimeUnit.SECONDS
-            );
-
+                            : mDefReadTimeout, TimeUnit.SECONDS);
 
             CookieJar cookieJar = mNetProvider.configCookie();
             if (cookieJar != null) {
                 builder.cookieJar(cookieJar);
             }
 
-            if (mNetProvider.dispatchProgressEnable()) {
-                builder.addInterceptor(ProgressHelper.get().getInterceptor());
+            if (mNetProvider.configProgressEnable()) {
+                ProgressManager.getInstance().with(builder);
+            }
+
+            if(mNetProvider.configMultiUrlEnable()) {
+                RetrofitUrlManager.getInstance().with(builder);
+            }
+
+            if (mNetProvider.configLogEnable() != null) {
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(mNetProvider.configLogEnable());
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                builder.addInterceptor(loggingInterceptor);
             }
 
             Interceptor[] interceptors = mNetProvider.configInterceptors();
@@ -102,11 +113,6 @@ public class ApiClient {
             }
 
             mNetProvider.configHttps(builder);
-
-            if (mNetProvider.configLogEnable()) {
-                LogInterceptor logInterceptor = new LogInterceptor();
-                builder.addInterceptor(logInterceptor);
-            }
 
             mHttpClient = builder.build();
         }

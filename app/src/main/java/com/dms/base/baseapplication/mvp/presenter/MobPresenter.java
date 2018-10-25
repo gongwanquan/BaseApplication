@@ -5,6 +5,7 @@ import com.dms.base.baseapplication.model.HistoryEntity;
 import com.dms.base.baseapplication.model.HoroscopeEntity;
 import com.dms.base.baseapplication.model.BaseResponse;
 import com.dms.base.baseapplication.model.IdiomEntity;
+import com.dms.base.baseapplication.model.PerpetualCalendar;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.net.ApiManager;
 import com.dms.base.baseapplication.net.ApiStore;
@@ -95,6 +96,20 @@ public class MobPresenter extends BasePresenter<MobView> {
                 return false;
             }
 
+        });
+    }
+
+    public void queryPerpetual(String date) {
+        subscribe(mApiStore.day(date), new ResponseListener<BaseResponse<PerpetualCalendar>>() {
+            @Override
+            public void onSuccess(BaseResponse<PerpetualCalendar> perpetualCalendarBaseResponse) {
+                getView().showPerpetual(perpetualCalendarBaseResponse.getData());
+            }
+
+            @Override
+            public boolean handleError(NetError netError) {
+                return false;
+            }
         });
     }
 

@@ -6,6 +6,7 @@ import com.dms.base.baseapplication.model.DictionaryEntity;
 import com.dms.base.baseapplication.model.HistoryEntity;
 import com.dms.base.baseapplication.model.HoroscopeEntity;
 import com.dms.base.baseapplication.model.IdiomEntity;
+import com.dms.base.baseapplication.model.PerpetualCalendar;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.R;
@@ -74,6 +75,11 @@ public class DictionaryFragment extends BaseUiFragment<MobPresenter> implements 
 
     @Override
     public void showHoroscope(HoroscopeEntity horoscopeEntity) {
+
+    }
+
+    @Override
+    public void showPerpetual(PerpetualCalendar perpetualCalendar) {
 
     }
 }

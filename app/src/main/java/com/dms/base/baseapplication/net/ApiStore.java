@@ -5,6 +5,7 @@ import com.dms.base.baseapplication.model.HistoryEntity;
 import com.dms.base.baseapplication.model.HoroscopeEntity;
 import com.dms.base.baseapplication.model.BaseResponse;
 import com.dms.base.baseapplication.model.IdiomEntity;
+import com.dms.base.baseapplication.model.PerpetualCalendar;
 
 import java.util.List;
 import io.reactivex.Observable;
@@ -29,6 +30,9 @@ public interface ApiStore {
 
     @GET("appstore/horoscope/day")
     Observable<BaseResponse<HoroscopeEntity>> horoscope(@Query("date")String date, @Query("hour") String hour);
+
+    @GET("appstore/calendar/day")
+    Observable<BaseResponse<PerpetualCalendar>> day(@Query("date") String date);
 
 
 

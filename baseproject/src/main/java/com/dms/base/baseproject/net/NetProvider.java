@@ -3,6 +3,7 @@ package com.dms.base.baseproject.net;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by wanglei on 2016/12/24.
@@ -19,11 +20,13 @@ public interface NetProvider {
 
     CookieJar configCookie();
 
-    boolean dispatchProgressEnable();
+    boolean configMultiUrlEnable();
+
+    boolean configProgressEnable();
+
+    HttpLoggingInterceptor.Logger configLogEnable();
 
     Interceptor[] configInterceptors();
 
     void configHttps(OkHttpClient.Builder builder);
-
-    boolean configLogEnable();
 }

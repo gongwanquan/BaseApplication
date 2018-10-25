@@ -7,16 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.broadcast.DownloadReceiver;
 import com.dms.base.baseapplication.net.ApiManager;
 import com.dms.base.baseapplication.ui.widget.LoadingDialog;
 import com.dms.base.baseapplication.utils.DownloadUtils;
-import com.dms.base.baseproject.mvp.presenter.CommonPresenter;
-import com.dms.base.baseproject.net.progress.ProgressHelper;
-import com.dms.base.baseproject.net.progress.ProgressListener;
 import com.dms.base.baseproject.net.transformer.SchedulerTransformer;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -26,7 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DecimalFormat;
 
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -35,6 +30,9 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import me.jessyan.progressmanager.ProgressListener;
+import me.jessyan.progressmanager.ProgressManager;
+import me.jessyan.progressmanager.body.ProgressInfo;
 import okhttp3.ResponseBody;
 
 public class DownloadActivity extends BaseUIActivity {
@@ -75,17 +73,17 @@ public class DownloadActivity extends BaseUIActivity {
         Uri uri = Uri.parse(url);
         final LoadingDialog loadingDialog = new LoadingDialog();
 
-        ProgressHelper.get().addResponseListener("https://raw.githubusercontent.com/getlantern/lantern-binaries/master/lantern-installer.apk", new ProgressListener() {
+        ProgressManager.getInstance().addResponseListener("https://raw.githubusercontent.com/getlantern/lantern-binaries/master/lantern-installer.apk", new ProgressListener() {
+
             @Override
-            public void onProgress(long soFarBytes, long totalBytes) {
-                double p = soFarBytes * 1.0 / totalBytes * 1.0;
-                DecimalFormat df1 = new DecimalFormat("##.00%");
-                loadingDialog.setLoadingTxt(df1.format(p));
+            public void onProgress(ProgressInfo progressInfo) {
+                int percent = progressInfo.getPercent();
+                loadingDialog.setLoadingTxt(percent + "%");
             }
 
             @Override
-            public void onError(Throwable throwable) {
-                showMessage(throwable.getMessage());
+            public void onError(long id, Exception e) {
+
             }
         });
 

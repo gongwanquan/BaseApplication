@@ -36,27 +36,30 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     api 'com.android.support:appcompat-v7:28.0.0-rc02'
-
+    //View Binder
     api "com.jakewharton:butterknife:8.8.1"
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
-
+    //Img Loader
     api "com.github.bumptech.glide:glide:${ApiVersion["Glide"]}"
     annotationProcessor "com.github.bumptech.glide:compiler:${ApiVersion["Glide"]}"
     api "com.github.bumptech.glide:okhttp3-integration:${ApiVersion["Glide"]}"
-
-    api "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42"
-
+    //Json Parser
     api "com.google.code.gson:gson:2.8.5"
-
+    //Http
+    api "com.squareup.okhttp3:okhttp:${ApiVersion["OkHttp"]}"
+    api "com.squareup.okhttp3:logging-interceptor:${ApiVersion["OkHttp"]}"
     api "com.squareup.retrofit2:retrofit:${ApiVersion["Retrofit"]}"
     api "com.squareup.retrofit2:converter-gson:${ApiVersion["Retrofit"]}"
     api "com.squareup.retrofit2:adapter-rxjava2:${ApiVersion["Retrofit"]}"
-    api "com.squareup.okhttp3:logging-interceptor:${ApiVersion["OkHttp"]}"
-    //reactive
+    //Progress
+    api 'me.jessyan:progressmanager:1.5.0'
+    //Multi Url
+    api 'me.jessyan:retrofit-url-manager:1.4.0'
+    //Reactive
     api "io.reactivex.rxjava2:rxjava:2.2.1"
     api "io.reactivex.rxjava2:rxandroid:2.1.0"
     api "com.blankj:rxbus:1.4"
     api "com.github.tbruyelle:rxpermissions:0.10.2"
-    //utils
+    //Utils
     api "com.blankj:utilcode:1.20.4"
 }

@@ -1,58 +1,46 @@
 package com.dms.base.baseapplication.ui.activity;
 
 
-import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.dms.base.baseapplication.R;
+import com.dms.base.baseapplication.ui.widget.SingleSelectDialog;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
-import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LeetCodeActivity extends BaseUIActivity {
-    @BindView(R.id.swipe_layout)
-    SwipeMenuLayout mSwipeMenuLayout;
 
+
+    @BindView(R.id.result_iv)
+    ImageView resultIv;
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_leet_code;
     }
 
-    @Override
-    public void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-//        mSwipeMenuLayout.setSwipeEnable(false);
-    }
 
-    private void twoSum() {
-        int nums[] = {2, 7, 11, 15};
-        int target = 17;
+    @OnClick(R.id.get_photo_btn)
+    public void onViewClicked() {
+//        GlideApp.with(this)
+//                .load("https://p2.ssl.qhimgs1.com/sdr/200_200_/t013eb47e70063fa4e2.jpg")
+//                .override(500)
+//                .into(resultIv);
 
-        Map<Integer, Integer> map = new HashMap<>();
+//        ConfirmDialog confirmDialog = new ConfirmDialog(this);
+//        confirmDialog.setTitleStr("升级");
+//        confirmDialog.setContentStr("当前最新版本为2.3.0，是否升级？");
+//        confirmDialog.setConfirmListener(new ConfirmDialog.ConfirmListener() {
+//            @Override
+//            public void onConfirm() {
+//                showMessage("升级为2.3版本");
+//            }
+//        });
+//        confirmDialog.show();
 
-        for (int i = 0; i < nums.length; i++) {
-            if (map.containsKey(target - nums[i])) {
-//                resultTv.setText("key1 = " + map.get(target - nums[i]) + "\nkey2 = " + i);
-                break;
-            }
-            map.put(nums[i], i);
-        }
-    }
-
-    private void reverseInteger() {
-        int source = -14646123;
-        int result = 0;
-        while (Math.abs(source) > 0) {
-            result = result * 10 + source % 10;
-            source = source / 10;
-        }
-
-
+        SingleSelectDialog singleSelectDialog = new SingleSelectDialog();
+        singleSelectDialog.show(getSupportFragmentManager(), "");
     }
 }
