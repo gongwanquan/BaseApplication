@@ -50,12 +50,13 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             setContentView(mRootView);
         }
 
+        initView(mRootView);
+
         mPresenter = createPresenter();
         if (null != mPresenter) {
             mPresenter.attachView(this);
         }
 
-        initView(mRootView);
         initData(savedInstanceState);
     }
 
