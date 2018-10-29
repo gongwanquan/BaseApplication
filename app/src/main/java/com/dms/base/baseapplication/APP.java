@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.dms.base.baseapplication.net.KeyInterceptor;
+import com.dms.base.baseapplication.net.MyLogger;
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.NetProvider;
 
@@ -18,6 +19,7 @@ public class APP extends Application {
         super.onCreate();
 
         LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG);
+        LogUtils.getConfig().setGlobalTag("GWQ_LOG");
 
         ApiClient.registerProvider(new NetProvider() {
             @Override
@@ -57,12 +59,7 @@ public class APP extends Application {
 
             @Override
             public HttpLoggingInterceptor.Logger configLogEnable() {
-                return new HttpLoggingInterceptor.Logger() {
-                    @Override
-                    public void log(String message) {
-                        LogUtils.dTag("gwq", message);
-                    }
-                };
+                return new MyLogger();
             }
 
 

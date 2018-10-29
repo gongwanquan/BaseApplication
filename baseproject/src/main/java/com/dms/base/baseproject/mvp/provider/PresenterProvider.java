@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.ui.activity.BaseActivity;
+import com.dms.base.baseproject.ui.dialog.BaseDialog;
 import com.dms.base.baseproject.ui.fragment.BaseFragment;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -18,6 +19,11 @@ public class PresenterProvider {
     @Nullable
     public static <P extends IPresenter> P createPresenter(@NonNull BaseFragment baseFragment) {
         return createPresenter(baseFragment.getClass());
+    }
+
+    @Nullable
+    public static <P extends IPresenter> P createPresenter(@NonNull BaseDialog baseActivity) {
+        return createPresenter(baseActivity.getClass());
     }
 
     @Nullable

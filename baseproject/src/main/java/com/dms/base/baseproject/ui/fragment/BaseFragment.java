@@ -18,13 +18,11 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IView {
 
-    private View mRootView;
+    protected View mRootView;
 
     private Unbinder mUnBinder;
 
     protected P mPresenter;
-
-    private RxPermissions mRxPermissions;
 
     private boolean mIsViewInitiated, mIsVisibleToUser, mIsDataInitiated;
 
@@ -34,7 +32,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
+    public void initView(View rootView) {
     }
 
     @Override
@@ -61,7 +59,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
                 viewGroup.removeView(mRootView);
             }
         }
-        initView(savedInstanceState);
+        initView(mRootView);
         return mRootView;
     }
 

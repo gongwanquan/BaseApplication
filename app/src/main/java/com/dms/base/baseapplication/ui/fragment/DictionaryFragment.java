@@ -2,6 +2,8 @@ package com.dms.base.baseapplication.ui.fragment;
 
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.LogUtils;
 import com.dms.base.baseapplication.model.DictionaryEntity;
 import com.dms.base.baseapplication.model.HistoryEntity;
 import com.dms.base.baseapplication.model.HoroscopeEntity;
@@ -50,6 +52,7 @@ public class DictionaryFragment extends BaseUiFragment<MobPresenter> implements 
             mKeyWords = bundle.getString("extra_keywords");
             mPresenter.queryDictionary(mKeyWords);
         }
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.dms.base.baseproject.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.dms.base.baseproject.mvp.presenter.BasePresenter;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
@@ -26,9 +27,9 @@ public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<
     }
 
     @Override
-    public void setContentView(int layoutResID) {
+    public void setContentView(View view) {
         mStateView = new StateLayout(this);
-        mStateView.setContentResource(layoutResID);
+        mStateView.addView(view);
         View.OnClickListener emptyAndErrorClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,7 +38,9 @@ public abstract class BaseUIActivity<P extends IPresenter> extends BaseActivity<
         };
         mStateView.setEmptyAction(emptyAndErrorClickListener);
         mStateView.setErrorAction(emptyAndErrorClickListener);
-        setContentView(mStateView);
+
+        ViewGroup contentParent = getWindow().getDecorView().findViewById(android.R.id.content);
+        contentParent.addView(mStateView);
     }
 
     @Override

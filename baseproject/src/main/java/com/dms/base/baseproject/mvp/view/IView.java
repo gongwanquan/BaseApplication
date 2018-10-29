@@ -2,7 +2,7 @@ package com.dms.base.baseproject.mvp.view;
 
 
 import android.os.Bundle;
-
+import android.view.View;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.net.error.NetError;
 
@@ -12,7 +12,7 @@ public interface IView {
 
     <P extends IPresenter> P createPresenter();
 
-    void initView(Bundle savedInstanceState);
+    void initView(View rootView);
 
     void initData(Bundle savedInstanceState);
 

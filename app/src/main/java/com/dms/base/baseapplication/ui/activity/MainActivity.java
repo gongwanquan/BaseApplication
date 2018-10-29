@@ -48,8 +48,8 @@ public class MainActivity extends BaseUIActivity<MobPresenter> implements MobVie
 
 
     @Override
-    public void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
+    public void initView(View rootView) {
+        super.initView(rootView);
         mTitleBar.setTitle("测试");
 
         dataTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

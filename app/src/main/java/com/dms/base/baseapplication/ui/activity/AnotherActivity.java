@@ -36,8 +36,8 @@ public class AnotherActivity extends BaseUIActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
+    public void initView(View rootView) {
+        super.initView(rootView);
         mTitleBar.setTitle("编辑用户");
 
         mBaseFragments = new ArrayList<>(2);

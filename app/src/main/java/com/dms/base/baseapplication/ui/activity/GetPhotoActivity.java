@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import com.dms.base.baseapplication.BuildConfig;
 import com.dms.base.baseapplication.R;
@@ -54,8 +55,8 @@ public class GetPhotoActivity extends BaseUIActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
+    public void initView(View rootView) {
+        super.initView(rootView);
         mTitleBar.setTitle("照片");
     }
 

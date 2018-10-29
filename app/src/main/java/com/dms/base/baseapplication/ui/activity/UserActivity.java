@@ -2,6 +2,7 @@ package com.dms.base.baseapplication.ui.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -63,8 +64,8 @@ public class UserActivity extends BaseUIActivity<CommonPresenter> {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
+    public void initView(View rootView) {
+        super.initView(rootView);
         mTitleBar.setTitle(R.string.title_activity_login);
     }
 

@@ -22,6 +22,16 @@ public abstract class BaseUiFragment<P extends IPresenter> extends BaseFragment<
         View view = super.onCreateView(inflater, container, savedInstanceState);
         mStateView = new StateLayout(getContext());
         mStateView.addView(view);
+
+        View.OnClickListener emptyAndErrorClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onErrorAndEmptyAction();
+            }
+        };
+        mStateView.setEmptyAction(emptyAndErrorClickListener);
+        mStateView.setErrorAction(emptyAndErrorClickListener);
+
         return mStateView;
     }
 
