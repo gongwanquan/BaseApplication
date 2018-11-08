@@ -1,5 +1,6 @@
 package com.dms.base.baseapplication.ui.widget;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,13 +23,6 @@ public class SingleSelectDialog extends BaseDialog {
     @Override
     public void initView(View v) {
 
-//        Window window = getDialog().getWindow();
-//        WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.gravity = Gravity.BOTTOM;
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        window.setAttributes(lp);
-
         mSelectItemLv = v.findViewById(R.id.single_select_item_lv);
         mSelectItemLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -36,15 +30,18 @@ public class SingleSelectDialog extends BaseDialog {
             }
         });
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getContext(), R.layout.item_single_select, R.id.single_select_item_tv, getData());
-        mSelectItemLv.setAdapter(arrayAdapter);
-
         v.findViewById(R.id.single_select_cancel_tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
+    }
+
+    @Override
+    public void initData(Bundle savedInstanceState) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getContext(), R.layout.item_single_select, R.id.single_select_item_tv, getData());
+        mSelectItemLv.setAdapter(arrayAdapter);
     }
 
     private ArrayList<String> getData() {

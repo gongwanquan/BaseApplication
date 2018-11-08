@@ -88,6 +88,15 @@
 
 ##---------------End: proguard configuration for OkHttp  ----------
 
+
+
+##---------------Start: proguard configuration for Okio  ----------
+-dontwarn com.squareup.**
+-dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+##---------------End: proguard configuration for Okio  ----------
+
 ##---------------Start: proguard configuration for Retrofit  ----------
 
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
@@ -119,3 +128,5 @@
 -keep interface me.jessyan.progressmanager.** { *; }
 
 ##---------------End: proguard configuration for ProgressManager  ----------
+
+

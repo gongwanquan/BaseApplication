@@ -11,10 +11,10 @@ import android.support.annotation.Nullable;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.broadcast.DownloadReceiver;
 import com.dms.base.baseapplication.net.ApiManager;
-import com.dms.base.baseapplication.ui.widget.LoadingDialog;
 import com.dms.base.baseapplication.utils.DownloadUtils;
 import com.dms.base.baseproject.net.transformer.SchedulerTransformer;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
+import com.dms.base.baseproject.ui.widget.LoadingDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -71,7 +71,7 @@ public class DownloadActivity extends BaseUIActivity {
         final String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + DownloadUtils.DOWNLOAD_FOLDER_NAME + File.separator + DownloadUtils.DOWNLOAD_FILE_NAME;
 
         Uri uri = Uri.parse(url);
-        final LoadingDialog loadingDialog = new LoadingDialog();
+        final LoadingDialog loadingDialog = new LoadingDialog(this);
 
         ProgressManager.getInstance().addResponseListener("https://raw.githubusercontent.com/getlantern/lantern-binaries/master/lantern-installer.apk", new ProgressListener() {
 
@@ -97,7 +97,7 @@ public class DownloadActivity extends BaseUIActivity {
                 }).subscribe(new Observer<Boolean>() {
             @Override
             public void onSubscribe(Disposable d) {
-                loadingDialog.show(getSupportFragmentManager(), "loading");
+                loadingDialog.show();
             }
 
             @Override

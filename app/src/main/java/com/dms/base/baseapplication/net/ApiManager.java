@@ -1,5 +1,9 @@
 package com.dms.base.baseapplication.net;
 
+import com.dms.base.baseapplication.net.api.ApiStore;
+import com.dms.base.baseapplication.net.api.FileService;
+import com.dms.base.baseapplication.net.api.HealthService;
+import com.dms.base.baseapplication.net.api.UserService;
 import com.dms.base.baseproject.net.ApiClient;
 
 public class ApiManager {
@@ -8,6 +12,8 @@ public class ApiManager {
     private static UserService mUserService;
 
     private static FileService mFileService;
+
+    private static HealthService mHealthService;
 
     public static ApiStore getApiStore() {
         if (null == mApiStore) {
@@ -36,5 +42,15 @@ public class ApiManager {
         }
 
         return mFileService;
+    }
+
+    public static HealthService getHealthService() {
+        if(null == mHealthService) {
+            mHealthService = ApiClient.getInstance()
+                    .getRetrofit()
+                    .create(HealthService.class);
+        }
+
+        return mHealthService;
     }
 }

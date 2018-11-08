@@ -1,13 +1,11 @@
 package com.dms.base.baseapplication.ui.activity;
 
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.dms.base.baseapplication.R;
 import com.dms.base.baseapplication.model.DictionaryEntity;
@@ -18,9 +16,7 @@ import com.dms.base.baseapplication.model.PerpetualCalendar;
 import com.dms.base.baseapplication.mvp.presenter.MobPresenter;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseproject.ui.activity.BaseUIActivity;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

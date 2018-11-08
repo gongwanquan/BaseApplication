@@ -8,7 +8,7 @@ import com.dms.base.baseapplication.model.IdiomEntity;
 import com.dms.base.baseapplication.model.PerpetualCalendar;
 import com.dms.base.baseapplication.mvp.view.MobView;
 import com.dms.base.baseapplication.net.ApiManager;
-import com.dms.base.baseapplication.net.ApiStore;
+import com.dms.base.baseapplication.net.api.ApiStore;
 import com.dms.base.baseproject.mvp.presenter.BasePresenter;
 import com.dms.base.baseproject.net.ResponseListener;
 import com.dms.base.baseproject.net.error.NetError;

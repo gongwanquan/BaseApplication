@@ -1,4 +1,4 @@
-package com.dms.base.baseapplication.net;
+package com.dms.base.baseapplication.net.api;
 
 
 import com.dms.base.baseapplication.model.BaseResponse;

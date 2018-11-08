@@ -6,11 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.dms.base.baseproject.mvp.presenter.IPresenter;
 import com.dms.base.baseproject.mvp.provider.PresenterProvider;
 import com.dms.base.baseproject.mvp.view.IView;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -52,13 +53,13 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (null == mRootView && getLayoutId() > 0) {
             mRootView = inflater.inflate(getLayoutId(), container, false);
-            mUnBinder = ButterKnife.bind(this, mRootView);
         } else {
             ViewGroup viewGroup = (ViewGroup) mRootView.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(mRootView);
             }
         }
+        mUnBinder = ButterKnife.bind(this, mRootView);
         initView(mRootView);
         return mRootView;
     }

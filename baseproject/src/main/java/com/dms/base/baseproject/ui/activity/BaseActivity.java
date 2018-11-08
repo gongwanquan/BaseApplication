@@ -2,14 +2,16 @@ package com.dms.base.baseproject.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import com.blankj.utilcode.util.ToastUtils;
-import com.dms.base.baseproject.mvp.provider.PresenterProvider;
-import com.dms.base.baseproject.mvp.presenter.IPresenter;
-import com.dms.base.baseproject.mvp.view.IView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.dms.base.baseproject.mvp.presenter.IPresenter;
+import com.dms.base.baseproject.mvp.provider.PresenterProvider;
+import com.dms.base.baseproject.mvp.view.IView;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 

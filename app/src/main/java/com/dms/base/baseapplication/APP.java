@@ -1,18 +1,18 @@
 package com.dms.base.baseapplication;
 
 import android.app.Application;
-
 import com.blankj.utilcode.util.LogUtils;
 import com.dms.base.baseapplication.net.KeyInterceptor;
 import com.dms.base.baseapplication.net.MyLogger;
 import com.dms.base.baseproject.net.ApiClient;
 import com.dms.base.baseproject.net.NetProvider;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class APP extends Application {
+
+
 
     @Override
     public void onCreate() {
@@ -75,4 +75,8 @@ public class APP extends Application {
         });
 
     }
+
+
+
 }
+

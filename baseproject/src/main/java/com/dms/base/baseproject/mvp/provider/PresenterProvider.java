@@ -22,8 +22,8 @@ public class PresenterProvider {
     }
 
     @Nullable
-    public static <P extends IPresenter> P createPresenter(@NonNull BaseDialog baseActivity) {
-        return createPresenter(baseActivity.getClass());
+    public static <P extends IPresenter> P createPresenter(@NonNull BaseDialog baseDialog) {
+        return createPresenter(baseDialog.getClass());
     }
 
     @Nullable
