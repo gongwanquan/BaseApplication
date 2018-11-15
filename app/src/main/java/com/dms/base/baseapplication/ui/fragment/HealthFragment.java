@@ -48,8 +48,7 @@ public class HealthFragment extends BaseFragment<HealthPresenter> implements Hea
     @Override
     public void initView(View rootView) {
         super.initView(rootView);
-        resultRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        resultRv.setNestedScrollingEnabled(false);
+        resultRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
     @Override

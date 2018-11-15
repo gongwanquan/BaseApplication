@@ -1,6 +1,5 @@
 package com.dms.base.baseapplication.ui.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dms.base.baseapplication.R;
-import com.dms.base.baseapplication.ui.activity.LeetCodeActivity;
 import com.dms.base.baseproject.ui.dialog.BaseDialog;
 
 import javax.crypto.Cipher;
@@ -23,8 +21,6 @@ public class FingerprintDialog extends BaseDialog {
     private CancellationSignal mCancellationSignal;
 
     private Cipher mCipher;
-
-    private LeetCodeActivity mActivity;
 
     private TextView errorMsg;
     /**
@@ -64,10 +60,9 @@ public class FingerprintDialog extends BaseDialog {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (LeetCodeActivity) getActivity();
+
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +79,7 @@ public class FingerprintDialog extends BaseDialog {
 
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onResume() {
@@ -99,7 +95,7 @@ public class FingerprintDialog extends BaseDialog {
         stopListening();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private void startListening(Cipher cipher) {
         isSelfCancelled = false;
         mCancellationSignal = new CancellationSignal();
@@ -135,7 +131,7 @@ public class FingerprintDialog extends BaseDialog {
         }, null);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
     private void stopListening() {
         if (mCancellationSignal != null) {
             mCancellationSignal.cancel();
